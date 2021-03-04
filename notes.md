@@ -13,7 +13,7 @@ Tabulator accepts `JSON` arrays containing objects. So, to start off, I need to 
 
 ```js
 var request = {
-    "uid":0, // Increments? Or randomly generated?
+    "uid":0, // Unique identifier. Increments? Or randomly generated? {Number}
     "sel":false, // Is this request selected? {Bool} 
     "artist":"Ian", // Assigned artist for this request. Initially unassigned or null {String}
     //"priority":1, // Maybe handled in Artist Data
@@ -26,33 +26,35 @@ var request = {
         "product": "Postcard", // or Menu or Scratch Off, etc {String}
     },
     "industry":"auto", // Can be "auto", "dentistry", or "regular" {String}
-    "tier":"gray", // Can be "orange", "blue" {String}
-    "kind":"Changes to Existing Natives", // or New Build from Different Product Natives, etc.
-    "content":"Moderate", // or Light, or Heavy, etc
-    "design":"Moderate", // or Light, or Heavy, etc
-    "task":{
-        "title":"Make Changes",
-        "cr":true, // or false
-        "datetime":"Mon 3-1-21 9:48AM"
+    "tier":"gray", // Can be "grey", "orange" or "blue" {String}
+    "kind":"Changes to Existing Natives", // Type of request this is {String}
+    "content":"Moderate", // Attributes which describe the content load of this request. {String}
+    "design":"Moderate", // Attributes which describe the design load of this request. {String}
+    "time":0.5,  // The amount of time this request should take (in hrs) {Number}
+    "task":{ // Current task of this request item
+        "title":"Make Changes", // Name of task {String}
+        "cr":true, // Does this task require Creative Review {Bool}
+        "datetime":"Mon 3-1-21 9:48AM" // The date and time at which this task was created {String}
     },
-    "received":{
-        "as":"Janelle S",
-        "datetime":"Mon 3-1-21 9:48AM"
+    "received":{ // Properties of the individuals who submitted this request
+        "as":"Janelle S", // Name of individual who submitted the request {String}
+        "datetime":"Mon 3-1-21 9:48AM" // Time the request was submitted {String}
     },
-    "due":"Tue 3-2-21 9:48AM",
-    "time":"0:30",
-    "history":true, // or false
-    "actions":[
+    "due":"Tue 3-2-21 9:48AM", // This request's due date {String}
+    "history":true, // If there is > 0 items under actions {Bool}
+    "actions":[ // A collection of actions that have happened to this request, can be grown or shrunk {Array}
         {
-            "name":"Changes in Progress",
-            "datetime":"Mon 3-1-21 10:02AM"
+            "name":"Changes in Progress", // Name of task {Array}
+            "datetime":"Mon 3-1-21 10:02AM" // Date of task {Array}
         },
         {
-            "name":"Changes in Progress",
-            "datetime":"Fri 2-26-21 9:02AM"
+            "name":"Changes in Progress", // Name of task {Array}
+            "datetime":"Fri 2-26-21 9:02AM" // Date of task {Array}
         }
     ],
-    "pending":false
+    "cp":false, // Creative Proof Pending {Bool}
+    "ap":false // AS Proof Pending {Bool}
+    "p":false // Print Pending {Bool}
 }
 ```
 
@@ -62,21 +64,21 @@ I believe that I will also need information about the artists. I will also need 
 
 ```js
 var artist = {
-    "uid":0, // Increments? Or randomly generated?
-    "firstname":"Ian", // Could be helpful to break this appart
-    "secondname":"Reed",
-    "industries":{
-        "regular":true,
-        "auto":true,
-        "dental":true
+    "uid":0, // Unique identifier. Increments? Or randomly generated? {Number}
+    "firstname":"Ian", // First name of artist {String}
+    "secondname":"Reed", // Last name of artist {String}
+    "industries":{  // List of industries this artist may pick up {Bool}
+        "regular":true, // {Bool}
+        "auto":true, // {Bool}
+        "dental":true // {Bool}
     }
-    "queue":{
-        "numprojects":1,
-        "timeload":1.3 
+    "queue":{  // Properties about the items in this artist's `requests` array
+        "numrequests":1, // Number of requests
+        "timeload":1.3 // Calculated amount of time requests will take
     }
-    "requests":[], // Priorities should be added as they are added to this array.
-
-
+    "requests":[ // This list is populated with properties from the Request Data that can be referenced in Artist Assignment
+       
+    ]
 }
 ```
 

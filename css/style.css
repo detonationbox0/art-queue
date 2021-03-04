@@ -1,10 +1,17 @@
 html, body {
     background-color:white;
     box-sizing: border-box;
-    height:auto;
+    height:auto; /* Avoids scroll bar issue */
     margin:0px;
     padding:5px;
     width:auto;
+}
+
+#container {
+    display:flex;
+    flex-direction:column;
+    width:100%;
+    height:100%;
 }
 
 
@@ -34,6 +41,31 @@ html, body {
 #header-buttons-container button {
     margin: 0 .5rem;
 }
+
+#main-content {
+    background-color:lightblue;
+    height:100%;
+    /* padding:10px; */
+}
+
+.table-header {
+    height:100%;
+    /* background-color:lightcoral; */
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.table-header button {
+    margin: .5rem .5rem;
+}
+
+#unassigned-requests-table {
+    height:"100%",
+}
+
+
+
 
 
 
