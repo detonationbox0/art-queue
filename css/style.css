@@ -1,0 +1,41 @@
+html, body {
+    background-color:white;
+    box-sizing: border-box;
+    height:auto;
+    margin:0px;
+    padding:5px;
+    width:auto;
+}
+
+
+
+#header {
+    background:linear-gradient(#003350,#002a42);
+}
+
+#header-logo-container {
+    align-items: center;
+    display:flex;
+    justify-content: center;
+}
+
+#header-img-logo {
+    padding:.75rem;
+}
+
+#header-buttons-container {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    background: linear-gradient(#0b8cd9,#1594e0);
+    border-top: 2px solid #69b8eb;
+}
+
+#header-buttons-container button {
+    margin: 0 .5rem;
+}
+
+
+
+
+
