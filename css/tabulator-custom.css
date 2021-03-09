@@ -2,7 +2,7 @@
 .tabulator {
   position: relative;
   border: 1px solid #999;
-  background-color: #888;
+  background-color: white;
   font-size: 12px;
   font-family:Verdana, Arial, Helvetica, sans-serif;
   text-align: left;
@@ -108,7 +108,7 @@
   display: -ms-flexbox;
   display: flex;
   -ms-flex-align: center;
-      align-items: center;
+  align-items: center;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -116,6 +116,7 @@
 }
 
 .tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-sorter .tabulator-arrow {
+  display:none; /* Hide Arrows */
   width: 0;
   height: 0;
   border-left: 6px solid transparent;

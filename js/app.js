@@ -1,28 +1,30 @@
 
+/**
+ * On Document Ready
+ * Create Tables, read JSON, and populate tables
+ */
+ import * as modTables from "./tables.js"
+ import * as modData from "./data.js"
+ 
 
-console.log("Hello there!");
 
 
+$(function() {
 
-var table = new Tabulator("#unassigned-requests-table", {
-    layout:"fitDataFill",
-    height:"311px",
-    columns:[
-        {title:"Grp", field:"store.group"},
-        {title:"Company", field:"store.name"},
-        {title:"Industry", field:"industry"},
-        {title:"Tier", field:"tier"},
-        {title:"Project Kind", field:"kind"},
-    ],
+    console.log("Document Ready...");
+
+    // Create the tables
+    var myTables = modTables.constructTables();
+
+    // Load the data
+    var myData = modData.loadData();
+
+
+    // Populate the tables
+    myTables.requestsTable.setData(myData.requests);
+    myTables.artistTable.setData(myData.requests);
+
+
 });
 
 
-
-fetch("./js/requests.json")
-    .then(response => {
-    return response.json();
-    })
-    .then( function(data) {
-        table.addData(data);
-    }
-);

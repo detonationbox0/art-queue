@@ -1,0 +1,19 @@
+[
+    {
+        "uid":0,
+        "firstname":"Ian", 
+        "secondname":"Reed", 
+        "industries":{  
+            "regular":true, 
+            "auto":true, 
+            "dental":true 
+        },
+        "queue":{  
+            "numrequests":1, 
+            "timeload":1.3 
+        },
+        "requests":[ 
+           
+        ]
+    }
+]

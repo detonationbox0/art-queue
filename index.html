@@ -33,15 +33,38 @@
         <!-- Table 1 - List of unassigned items -->
         <div id="unassigned-requests">
             <div class="table-header" id="unassigned-requests-head">
+              <div class="table-title">
+                <h3>Unassigned Requests</h3>
+              </div>
+              <div class="table-buttons">
                 <button>Button 1</button>
                 <button>Button 3</button>
                 <button>Button 3</button>
+              </div>
             </div>
+
             <div class="table-area" id="unassigned-requests-table">
 
             </div>
+
+        </div>
+
+        <div id="artist-availability">
+          <div class="table-header" id="artist-availability-head">
+            <div class="table-title">
+              <h3>Artist Availability</h3>
+            </div>
+            <div class="table-buttons">
+              <button>Button 1</button>
+              <button>Button 3</button>
+              <button>Button 3</button>
+            </div>
+          </div>
         </div>
         
+        <div class="table-area" id="artist-availability-table">
+
+        </div>
 
       </div>
 
@@ -51,6 +74,16 @@
     <!-- You can also require other files to run in this process -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script> -->
     <script type="text/javascript" src="js/tabulator-tables/js/tabulator.min.js"></script>
-    <script src="./js/app.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Modules -->
+    <script type="module" src="./js/tables.js"></script>
+    <script type="module" src="./js/lists.js"></script>
+    <script type="module" src="./js/data.js"></script>
+
+
+    <!-- Drivers -->
+    <script type="module" src="./js/app.js"></script>
+
   </body>
 </html>
