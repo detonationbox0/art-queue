@@ -6,7 +6,7 @@
  * @returns {Object} tables.artistTable The Tabulator table object for the Artists
  */
 
-export function constructTables() {
+export function constructTables(which) {
 
     /**
      * Create Unassigned Requests Table
@@ -17,7 +17,7 @@ export function constructTables() {
         maxHeight:"100%",
         // responsiveLayout:"collapse",
         columns:[
-            {title:"", field:"", formatter:function(cell, formatterParams, onRendered){
+            {title:"", field:"", vertAlign:"middle", formatter:function(cell, formatterParams, onRendered){
                     // http://tabulator.info/docs/4.9/format#format-custom
                     // Create Check Box Inputs
                     var uid = cell.getRow().getData().uid;
@@ -47,24 +47,24 @@ export function constructTables() {
 
                 }
             },
-            {title:"Company", field:"store.name", formatter:function(cell, formatterParams, onRendered){
+            {title:"Company", vertAlign:"middle", field:"store.name", formatter:function(cell, formatterParams, onRendered){
                     // http://tabulator.info/docs/4.9/format#format-custom
                     var uid = cell.getRow().getData().uid;
                     return `<span class='link req' uid='` + uid + `'>` + cell.getValue() + `</span>`; //return the contents of the cell;
                 }
             },
-            {title:"Grp", field:"store.group"},
-            {title:"Code", field:"store.code"},
-            {title:"Industry", field:"industry"},
-            {title:"Tier", field:"tier"},
-            {title:"Project Kind", field:"kind"},
-            {title:"Content Attributes", field:"content"},
-            {title:"Design Attributes", field:"content"},
-            {title:"Product", field:"store.product", formatter:function(cell, formatterParams, onRendered) {
+            {title:"Grp", field:"store.group", vertAlign:"middle"},
+            {title:"Code", field:"store.code", vertAlign:"middle"},
+            {title:"Industry", field:"industry", vertAlign:"middle"},
+            {title:"Tier", field:"tier", vertAlign:"middle"},
+            {title:"Project Kind", field:"kind", vertAlign:"middle"},
+            {title:"Content Attributes", field:"content", vertAlign:"middle"},
+            {title:"Design Attributes", field:"content", vertAlign:"middle"},
+            {title:"Product", field:"store.product", vertAlign:"middle", formatter:function(cell, formatterParams, onRendered) {
                 var uid = cell.getRow().getData().uid;
                 return `<span class='link prod' uid='` + uid + `'>` +  cell.getValue() + `</span>`
             }},
-            {title:"Scheduled Task", field:"task", formatter:function(cell, formatterParams, onRendered) {
+            {title:"Scheduled Task", field:"task", vertAlign:"middle", formatter:function(cell, formatterParams, onRendered) {
                 // If it's a system task, use system icon
                 cell.getElement().style.padding = "0px";
                 return `<div class='task-area'>
@@ -95,22 +95,78 @@ export function constructTables() {
     var artistTable = new Tabulator("#artist-availability-table", {
         layout:"fitDataStretch",
         maxHeight:"100%",
+
         // responsiveLayout:"collapse",
         columns:[
-            {title:"Artist", field:"artist"},
-            {title:"Grp", field:"store.group"},
-            {title:"Code", field:"store.code"},
-            {title:"Industry", field:"industry"},
-            {title:"Tier", field:"tier"},
-            {title:"Project Kind", field:"kind"},
-            {title:"Content Attributes", field:"content"},
-            {title:"Design Attributes", field:"content"},
-            {title:"Product", field:"store.product"},
-            {title:"Scheduled Task", field:"task.title"},
-            {title:"Received", field:"received.as"},
-            {title:"Est Client / AS Due Date", field:"due"},
-            {title:"Design Time", field:"time"},
-            {title:"History", field:"history"},
+            {title:"Artist", field:"firstname", vertAlign:"middle"},
+            {title:"Industry", field:"industries", vertAlign:"middle", formatter(cell, formatterParams, onRendered) {
+                var ind = cell.getValue("industries");
+                var indString = [];
+                if (ind.regular) {
+                    indString.push("Reg");
+                }
+                if (ind.auto) {
+                    indString.push("Aut");
+                }
+                if (ind.regular) {
+                    indString.push("Den");
+                }
+                return indString.join(", ")
+            }},
+            {title:"Tier", field:"tier", vertAlign:"middle"},
+            {title:"Active Queue", field:"queue.numRequests", vertAlign:"middle", formatter(cell, formatterParams, onRendered) {
+                var getReq = cell.getData().requests;
+                var timeload = cell.getData().queue.timeload;
+
+                if (getReq.length > 0) { // There's an empty one...
+
+                    var lastReq = getReq[getReq.length - 1];
+                    var qdate = lastReq["received"].datetime;
+
+                    var numReq = getReq.length;
+
+                    var activeQueue = `
+                        <div class="active-queue">
+                            <div class="active-queue-date">
+                                ` +  qdate + `
+                            </div>
+                            <div class="active-queue-stat">
+                                <div class="active-queue-num">
+                                    ` + numReq + ` Projects
+                                </div>
+                                <div class="active-queue-timeload">
+                                    ` + timeload + ` Hrs
+                                </div>
+                            </div>
+                        </div>
+                    `
+                    return activeQueue;
+                }
+                
+            }},
+            {title:"Priority 1", field:"", vertAlign:"middle", formatter(cell, formatterParams, onRendered) {
+                var cellData = cell.getData();
+                var req = cellData.requests[0];
+                
+                /* !!! You left off here mang !!! */
+                // Trying to get the group letter from req
+
+                console.log(req)
+                
+                
+            }},
+            // {title:"Code", field:"store.code"},
+            // {title:"Industry", field:"industry"},
+            // {title:"Tier", field:"tier"},
+            // {title:"Project Kind", field:"kind"},
+            // {title:"Content Attributes", field:"content"},
+            // {title:"Design Attributes", field:"content"},
+            // {title:"Product", field:"store.product"},
+            // {title:"Scheduled Task", field:"task.title"},
+            // {title:"Received", field:"received.as"},
+            // {title:"Est Client / AS Due Date", field:"due"},
+            // {title:"Design Time", field:"time"},
+            // {title:"History", field:"history"},
         ],
     });
 

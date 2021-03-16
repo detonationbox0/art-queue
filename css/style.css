@@ -101,4 +101,21 @@ span.link, p.link {
  }
 
 
+.active-queue {
+    display:flex;
+    align-items: center;
+    width:100%;
+}
 
+.active-queue-date {
+    margin-right:15px;
+}
+
+.active-queue-stat {
+    margin-left:auto;
+    text-align:right;
+}
+
+.active-queue-num {
+    font-weight:bolder;
+}

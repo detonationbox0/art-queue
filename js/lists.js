@@ -1,5 +1,5 @@
 /**
- * Create the tables required for this application in DOM
+ * Returns a collection of lists, allows for randomized projects on each load
  * 
  * @returns {Object} lists Contains lists of data that can be used to create requests randomly
  * @returns {Object} lists.artists A list of the artists
@@ -11,22 +11,59 @@
 
 
 export function getLists() {
-    var artists = [ "Ian",
-                "Berto",
-                "Lisa",
-                "Peter",
-                "Matt",
-                "Breanna",
-                "Kristen",
-                "Rita",
-                "Alaina",
-                "Christian",
-                "Jeff",
-                "Luke",
-                "Nathan",
-                "Joshua",
-                "Luis",
-                "Emily"
+    var artists = [
+                {
+                    "firstname":"Ian",
+                    "lastname":"Reed"
+                },{
+                    "firstname":"Berto",
+                    "lastname":"Burgos-Colón"
+                },{
+                    "firstname":"Lisa",
+                    "lastname":"Sweitzer"
+                },{
+                    "firstname":"Peter",
+                    "lastname":"Aston"
+                },{
+                    "firstname":"Matt",
+                    "lastname":"Calvert"
+                },{
+                    "firstname":"Breanna",
+                    "lastname":"Bossler"
+                },{
+                    "firstname":"Kristen",
+                    "lastname":"DeMelfy"
+                },{
+                    "firstname":"Rita",
+                    "lastname":"Gagliardi"
+                },{
+                    "firstname":"Alaina",
+                    "lastname":"Weidner"
+                },{
+                    "firstname":"Christian",
+                    "lastname":"Betancourt"
+                },{
+                    "firstname":"Jeff",
+                    "lastname":"Glass"
+                },{
+                    "firstname":"Luke",
+                    "lastname":"Coleman"
+                },{
+                    "firstname":"Nathan",
+                    "lastname":"Folk"
+                },{
+                    "firstname":"Joshua",
+                    "lastname":"Keller"
+                },{
+                    "firstname":"Luis",
+                    "lastname":"Aguilar"
+                },{
+                    "firstname":"Emily",
+                    "lastname":"Bentz"
+                },{
+                    "firstname":null,
+                    "lastname":null
+                },
             ];
 
     var clients = [ "Annie's Pizza - Portland Ave",
@@ -57,9 +94,21 @@ export function getLists() {
                     "Blue"
     ];
 
-    var kinds = [   "Brand New Builds",
+    var kinds = [   "Brand New Build",
                     "Changes to Existing Natives"
                 ];
+
+    var attr = ["Light",
+                "Moderate",
+                "Heavy",
+                null
+    ]
+
+    var tasks = [   "Make Changes",
+                    "Create Logo",
+                    "Update Pricing",
+                    null
+            ]
 
     var products = [    "100# Gloss Postcard",
                         "2 sided box topper",
@@ -83,7 +132,6 @@ export function getLists() {
                         "Brochure Small",
                         "BrochureXL",
                         "BusinessCard",
-                        "CALL TRACKING",
                         "ColossalPC",
                         "COUPON BOOK",
                         "Custom Insert",
@@ -91,7 +139,6 @@ export function getLists() {
                         "CUSTOM80",
                         "CustomEnv",
                         "CustomSilk",
-                        "DataProcessing",
                         "DOOR HANGER 100LB",
                         "EDDM Folded Magnet",
                         "EDDM Mag",
@@ -119,7 +166,6 @@ export function getLists() {
                         "JUMBOPC",
                         "Long Postcard",
                         "MAGNET",
-                        "Mail List Costs",
                         "MENU",
                         "Menu- Flat",
                         "Menu Small",
@@ -150,7 +196,6 @@ export function getLists() {
                         "MPSCFS",
                         "NEW MOVERS PLASTIC",
                         "NEW MOVERS POSTCARD",
-                        "Payment Plan",
                         "Peel A Gift",
                         "PizzaPeelCard",
                         "Plastic PC Lg - S",
@@ -159,7 +204,6 @@ export function getLists() {
                         "POSTCARD",
                         "PosterHangBar",
                         "SCRATCHOFF",
-                        "Unique Codes",
                         "WC2030",
                         "WC2430",
                         "WC2436",
@@ -182,7 +226,6 @@ export function getLists() {
                 "MandyW",
                 "MariaK",
                 "MattD",
-                "MSArt",
                 "NikieC",
                 "RachelJ",
                 "SarahB",
@@ -193,12 +236,14 @@ export function getLists() {
             ];
 
     return {
-        "artists":artists,
-        "clients":clients,
-        "industries":industries,
-        "tiers":tiers,
-        "kinds":kinds,
-        "products":products,
-        "as":accs
+        "artists":artists, // List of artists
+        "clients":clients, // List of clients
+        "industries":industries, // List of industries
+        "tiers":tiers, // List of tiers
+        "kinds":kinds, // List of kinds
+        "products":products, // List of products in .NET
+        "as":accs, // List of account specialists
+        "attr":attr, // List of attributes
+        "tasks":tasks // List of attributes
     }
 };

@@ -22,8 +22,8 @@ $(function() {
 
     // Populate the tables
     myTables.requestsTable.setData(myData.requests);
-    myTables.artistTable.setData(myData.requests);
-
+    myTables.artistTable.setData(myData.artists);
+    myTables.artistTable.setSort("queue.numRequests", "asc");
 
 });
 
