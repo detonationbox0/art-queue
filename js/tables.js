@@ -222,8 +222,6 @@ function priorityFormatter (index, cell) {
     // (!! Actually! Remember to not do it here, and decrement from here on!)
     // Remember to increment for each formatter
 
-    /* !!! You left off here mang !!! */
-    // Trying to get the group letter from req
     try {
         var grp = req.store.group;
         var shrtDate = req.shrtBackDate;
