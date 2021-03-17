@@ -145,16 +145,53 @@ export function constructTables(which) {
                 
             }},
             {title:"Priority 1", field:"", vertAlign:"middle", formatter(cell, formatterParams, onRendered) {
-                var cellData = cell.getData();
-                var req = cellData.requests[0];
-                
-                /* !!! You left off here mang !!! */
-                // Trying to get the group letter from req
+                var returnElem = priorityFormatter(1, cell);    // This chunk was the same for each of the prioritys
+                                                                // Except I needed the index of this request
+                                                                // to indicate which priority this is and 
+                                                                // if it's valid, otherwise N/A
 
-                console.log(req)
-                
-                
+                                                                // So broke to function priorityFormatter below.
+
+                                                                // Feeding it this cell too to get props if valid.
+                return returnElem;
             }},
+            {title:"Priority 2", field:"", vertAlign:"middle", formatter(cell, formatterParams, onRendered) {
+                var returnElem = priorityFormatter(2, cell);
+                return returnElem;
+            }},
+            {title:"Priority 3", field:"", vertAlign:"middle", formatter(cell, formatterParams, onRendered) {
+                var returnElem = priorityFormatter(3, cell);
+                return returnElem;
+            }},
+            {title:"Priority 4", field:"", vertAlign:"middle", formatter(cell, formatterParams, onRendered) {
+                var returnElem = priorityFormatter(4, cell);
+                return returnElem;
+            }},
+            {title:"Priority 5", field:"", vertAlign:"middle", formatter(cell, formatterParams, onRendered) {
+                var returnElem = priorityFormatter(5, cell);
+                return returnElem;
+            }},
+            {title:"Priority 6", field:"", vertAlign:"middle", formatter(cell, formatterParams, onRendered) {
+                var returnElem = priorityFormatter(6, cell);
+                return returnElem;
+            }},
+            {title:"Priority 7", field:"", vertAlign:"middle", formatter(cell, formatterParams, onRendered) {
+                var returnElem = priorityFormatter(7, cell);
+                return returnElem;
+            }},
+            {title:"Priority 8", field:"", vertAlign:"middle", formatter(cell, formatterParams, onRendered) {
+                var returnElem = priorityFormatter(8, cell);
+                return returnElem;
+            }},
+            {title:"Priority 9", field:"", vertAlign:"middle", formatter(cell, formatterParams, onRendered) {
+                var returnElem = priorityFormatter(9, cell);
+                return returnElem;
+            }},
+            {title:"Priority 10", field:"", vertAlign:"middle", formatter(cell, formatterParams, onRendered) {
+                var returnElem = priorityFormatter(10, cell);
+                return returnElem;
+            }}
+            
             // {title:"Code", field:"store.code"},
             // {title:"Industry", field:"industry"},
             // {title:"Tier", field:"tier"},
@@ -175,4 +212,37 @@ export function constructTables(which) {
             "artistTable":artistTable
     };
 
+}
+
+
+function priorityFormatter (index, cell) {
+    var cellData = cell.getData();
+    var req = cellData.requests[index - 1];
+
+    // (!! Actually! Remember to not do it here, and decrement from here on!)
+    // Remember to increment for each formatter
+
+    /* !!! You left off here mang !!! */
+    // Trying to get the group letter from req
+    try {
+        var grp = req.store.group;
+        var shrtDate = req.shrtBackDate;
+        var rtnElem = `
+        <div class="prt-date">
+            <div class="prt-date-fm">` + shrtDate + `
+            <div class="prt-grp">Grp ` + grp + `
+            </div>
+        `;
+    } catch (e) {
+        // req is undefined
+        var grp = undefined;
+
+        var rtnElem = `
+            <div class="prt-date">
+                <div class='prt-na'>N/A</div>
+            </div>
+        `;
+    }
+
+    return rtnElem;
 }

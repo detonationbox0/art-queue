@@ -119,3 +119,8 @@ span.link, p.link {
 .active-queue-num {
     font-weight:bolder;
 }
+
+.prt-date {
+    width:100%;
+    text-align:center;
+}

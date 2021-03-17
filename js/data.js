@@ -23,30 +23,33 @@ export function loadData() {
 
         // Loop artists in lists.js and create an object for them
         // Add that object to artists array
-
+        
         for ( var i = 0 ; i < listData.artists.length; i ++ ) {
-            
-            var thisArtist = listData.artists[i];
-            var artUid = '_' + Math.random().toString(36).substr(2, 9); // Make artist id
-            var artTier = listData.tiers[Math.floor(Math.random() * listData.tiers.length)];
-
-            var artist = {
-                "uid":artUid,
-                "firstname":thisArtist.firstname,
-                "lastname":thisArtist.lastname,
-                "tier":artTier,
-                "industries":{
-                    "regular":true,
-                    "auto":Boolean(Math.round(Math.random())), // Randomly true or false
-                    "dental":Boolean(Math.round(Math.random())), // Randomly true or false
-                },
-                "queue":{
-                    "numRequests":0,
-                    "timeload":0,
-                },
-                "requests":[], // We made a bucket for these
+            // console.log()
+            if (listData.artists[i].firstname != null) {
+                var thisArtist = listData.artists[i];
+                var artUid = '_' + Math.random().toString(36).substr(2, 9); // Make artist id
+                var artTier = listData.tiers[Math.floor(Math.random() * listData.tiers.length)];
+    
+                var artist = {
+                    "uid":artUid,
+                    "firstname":thisArtist.firstname,
+                    "lastname":thisArtist.lastname,
+                    "tier":artTier,
+                    "industries":{
+                        "regular":true,
+                        "auto":Boolean(Math.round(Math.random())), // Randomly true or false
+                        "dental":Boolean(Math.round(Math.random())), // Randomly true or false
+                    },
+                    "queue":{
+                        "numRequests":0,
+                        "timeload":0,
+                    },
+                    "requests":[], // We made a bucket for these
+                }
+                artists.push(artist)
             }
-            artists.push(artist)
+            
         }
 
         /*
@@ -106,9 +109,16 @@ export function loadData() {
             var tenDaysAgo = new Date();
             var tenDaysAhead = new Date();
             tenDaysAgo.setDate(today.getDate() - 10);
+
+
+
             tenDaysAhead.setDate(today.getDate() + 10);
 
             var backDate = randomDate(today, tenDaysAgo, 9, 17, "short");
+
+            // We need even shorter hand for the priority columns in the artist table
+            // ex: 3/1 9:46 AM
+            var shrtBackDate = randomDate(today, tenDaysAgo, 9, 17, "shorter");
             var fwdDate = randomDate(today, tenDaysAhead, 9, 17, "short");
             
 
@@ -126,6 +136,7 @@ export function loadData() {
                     "group":"E", 
                     "product": rndProduct
                 },
+                "shrtBackDate":shrtBackDate, // Date / Time for priority column in Artists table
                 "industry":rndIndustry, 
                 "tier":rndTier, 
                 "kind":rndKind, 
@@ -202,6 +213,8 @@ export function loadData() {
     console.log("Requests table: ")
     console.log(requests);
 
+    // Remove blank artists from artists list
+
     return {
         "requests":requests,
         "artists":artists
@@ -243,6 +256,8 @@ function randomDate(start, end, startHour, endHour, size) {
         var time = date.toLocaleString('en-US');
         var rtnValue = dayName + " " + time;
 
+    } else if (size == "shorter") {
+        rtnValue = date.getMonth() + 1 + "/" + date.getDate() + " " + date.toLocaleTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3");
     }
     return rtnValue;
   }
