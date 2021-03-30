@@ -11,6 +11,171 @@
   </head>
   <body>
 
+    <!-- Alert Area ↓ -->
+    <div id="alert">
+      <div class="content-container">
+        <!-- Scratch Pad -->
+        <!-- -------------------------------------------------------------- -->
+
+        <div class="view-request-container">
+          <div class="view-request-area">
+            <!-- Customer & Project Information -->
+            <h4 class="alert-header">Customer & Project Information</h4>
+            <div class="area-labels">
+              <div class="cpi-col" id="cpi-col1">
+                <div class="input-area">
+                  <label for="Company" class="input-label">Company</label>
+                  <input type="text" name="Company" value="Robert's Auto Service - San Diego" >
+                </div>
+                <div class="input-area">
+                  <label for="Product" class="input-label">Product</label>
+                  <input type="text" name="Product" value="POSTCARD" >
+                </div>
+                <div class="input-area">
+                  <label for="Project Kind" class="input-label">Project Kind</label>
+                  <input type="text" name="Project Kind" value="Changes to Existing Natives">
+                </div>
+              </div>
+              <div class="cpi-col" id="cpi-col2">
+                <div class="input-area">
+                  <label for="Store Code" class="input-label">Store Code</label>
+                  <input type="text" name="Store Code" value="25613" >
+                </div>
+                <div class="input-area">
+                  <label for="Group" class="input-label">Group</label>
+                  <input type="text" name="Group" value="E" >
+                </div>
+                <div class="input-area">
+                  <label for="Content" class="input-label">Content</label>
+                  <input type="text" name="Content" value="Moderate">
+                </div>
+              </div>
+              <div class="cpi-col" id="cpi-col3">
+                <div class="input-area">
+                  <label for="Contract ID" class="input-label">Contract ID</label>
+                  <input type="text" name="Contract ID" value="63960" >
+                </div>
+                <div class="input-area">
+                  <label for="Industry" class="input-label">Industry</label>
+                  <input type="text" name="Industry" value="Auto" >
+                </div>
+                <div class="input-area">
+                  <label for="Design" class="input-label">Design</label>
+                  <input type="text" name="Design" value="Moderate" >
+                </div>
+              </div>
+              <div class="cpi-col" id="cpi-col4">
+                <div class="input-area">
+                  <label for="Line" class="input-label">Line#</label>
+                  <input type="text" name="Line" value="1" >
+                </div>
+                <div class="input-area">
+                  <label for="Tier" class="input-label">Tier</label>
+                  <input type="text" name="Tier" value="Gray" >
+                </div>
+                <div class="input-area">
+                  <label for="Creative Review" class="input-label">Creative Review</label>
+                  <input type="text" name="Creative Review" value="Yes">
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr />
+          <div class="view-request-area">
+            <!-- Instructions -->
+            <h4 class="alert-header">Instructions</h4>
+            <div class="area-labels">
+              <div class="i-col" id="i-col1">
+                <button id="view-history">View History<img class="btn-book" src="./img/books.gif"  width="20" ></button>
+              </div>
+              <div class="i-col" id="i-col2">
+                <button id="view-brief-instructions">View Brief Instructions</button>
+              </div>
+              <div class="i-col" id="i-col3">
+                <button id="view-brief-attachments">View Brief Attachments</button>
+              </div>
+              <div class="i-col" id="i-col4">
+                <button id="view-brief-attachments">View Referenced Template</button>
+              </div>
+            </div>
+          </div>
+          <hr />
+          <div class="view-request-area">
+            <!-- Time Constraints -->
+            <h4 class="alert-header">Time Constraints</h4>
+            <div class="area-labels">
+              <div class="t-col" id="t-col1">
+                <div class="input-area">
+                  <label for="Brief Submitted" class="input-label">Brief Submitted</label>
+                  <input type="text" name="Brief Submitted" value="Monday 2/22/2021 9:48:00 AM">
+                </div>
+              </div>
+              <div class="t-col" id="t-col2">
+                <div class="input-area">
+                  <label for="Design Due Date" class="input-label">Design Due Date</label>
+                  <input type="text" name="Design Due Date" value="Tuesday 2/23/2021 9:48:00 AM">
+                </div>
+                <button id="reset-override">Reset Override</button>
+              </div>
+              <div class="t-col" id="t-col3">
+                <div class="input-area">
+                  <label for="Design Time" class="input-label">Design Time</label>
+                  <input type="text" name="Design Time" value="0 Hours 30 Minutes">
+                </div>
+                <div class="input-area">
+                  <label for="Design Time Override" class="input-label">Design Time Override</label>
+                  <input type="text" name="Design Time Override" value="0 Hours 30 Minutes">
+                </div>
+                <!-- <button id="reset-override">Reset Override</button> -->
+              </div>
+              
+            </div>
+          </div>
+          <hr />
+          <div class="view-request-area">
+            <!-- Artist Assignment -->
+            <h4 class="alert-header">Artist Assignment</h4>
+            <div class="area-labels">
+              <div class="a-col" id="a-col1">
+                <div class="input-area">
+                  <label for="Assign To" class="input-label">Assign To</label>
+                  <select name="Assign To">
+                    <option value="Ian">Ian</option>
+                    <option value="Berto">Berto</option>
+                    <option value="Lisa">Lisa</option>
+                  </select>
+                </div>
+              </div>
+              <div class="a-col" id="a-col2">
+                <div class="input-area">
+                  <label for="Priority Override" class="input-label">Priority Override</label>
+                  <select name="Priority Override">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+                </div>
+              </div>
+              <div class="a-col" id="a-col3">
+                <button id="assign-artist">Assign Artist</button>
+              </div>
+            </div>
+          </div>
+          <hr />
+          <div class="view-request-area">
+            <!-- Preview -->
+            <h4 class="alert-header">Preview</h4>
+            <div id="request-artist-table">
+              <h4>Table goes here.</h4>
+            </div>
+          </div>
+        </div>
+
+        <!-- -------------------------------------------------------------- -->
+        <!-- End Scratch Pad -->
+      </div>
+    </div>
+
     <!-- Contains the entire page ↓ -->
     <div id="container">
 
@@ -20,12 +185,25 @@
           <img class="image logo" id="header-img-logo" src="img/ms-logo.svg" alt="Mail Shark">
         </div>
         <div id="header-buttons-container">
-          <button>Button 1</button>
-          <button>Button 3</button>
-          <button>Button 3</button>
+          <button>Home</button>
+          <button>Clients</button>
+          <button>Reports</button>
+          <button>Admin</button>
+          <button>Log Out</button>
         </div>
       </div>
 
+      <div class="user-switcher">
+        <select class="a-leader">
+          <option value="Emily" selected>Emily</option>
+          <option value="Peter">Peter</option>
+          <option value="Peter">Berto</option>
+          <option value="Peter">Jordan</option>
+        </select>
+        <select disabled>
+          <option value="System Actions">System Actions</option>
+        </select>
+      </div>
 
       <!-- Contains the Main Content area-->
       <div id="main-content">

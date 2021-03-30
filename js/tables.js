@@ -1,3 +1,5 @@
+// import * as modApp from "./app.js"
+import * as domConstructor from "./dom-constructor.js"
 /**
  * Create the tables required for this application in DOM
  * 
@@ -13,7 +15,7 @@ export function constructTables(which) {
      */
 
     var requestsTable = new Tabulator("#unassigned-requests-table", {
-        layout:"fitDataStretch",
+        layout:"fitData",
         maxHeight:"100%",
         // responsiveLayout:"collapse",
         columns:[
@@ -53,13 +55,13 @@ export function constructTables(which) {
                     return `<span class='link req' uid='` + uid + `'>` + cell.getValue() + `</span>`; //return the contents of the cell;
                 }
             },
-            {title:"Grp", field:"store.group", vertAlign:"middle"},
+            {title:"Grp", field:"group", vertAlign:"middle"},
             {title:"Code", field:"store.code", vertAlign:"middle"},
             {title:"Industry", field:"industry", vertAlign:"middle"},
             {title:"Tier", field:"tier", vertAlign:"middle"},
             {title:"Project Kind", field:"kind", vertAlign:"middle"},
-            {title:"Content Attributes", field:"content", vertAlign:"middle"},
-            {title:"Design Attributes", field:"content", vertAlign:"middle"},
+            {title:"Content Attributes", field:"content", vertAlign:"middle", width:82},
+            {title:"Design Attributes", field:"content", vertAlign:"middle", width:82},
             {title:"Product", field:"store.product", vertAlign:"middle", formatter:function(cell, formatterParams, onRendered) {
                 var uid = cell.getRow().getData().uid;
                 return `<span class='link prod' uid='` + uid + `'>` +  cell.getValue() + `</span>`
@@ -80,11 +82,37 @@ export function constructTables(which) {
                             </div>
                         </div>
                 `
+            }, cellClick:function(e, cell){
+                //e - the click event object
+                //cell - cell component
+                console.log(cell.getData());
+                var dom = domConstructor.makeDom(cell.getData(), "View Request");
+                showMessage(dom);
             }},
-            {title:"Received", field:"received.as"},
-            {title:"Est Client / AS Due Date", field:"due"},
-            {title:"Design Time", field:"time"},
-            {title:"History", field:"history"},
+            {title:"Received", field:"received.as", vertAlign:"middle"},
+            {title:"Est Client / AS Due Date", field:"due", vertAlign:"middle"},
+            {title:"Design Time", field:"time", width:61, vertAlign:"middle", formatter:function(cell, formatterParams, onRendered) {
+                // For the rndTime, which is a random number between 0 and 1, we should convert to HH:MM
+                var timeDec = cell.getValue();
+                //https://stackoverflow.com/questions/35460303/how-to-convert-decimal-hour-value-to-hhmmss
+                var decimalTimeString = String(timeDec);
+                var n = new Date(0,0);
+                n.setMinutes(+decimalTimeString * 60);
+                var result = n.toTimeString().slice(0, 5);
+
+                return result;
+
+            }},
+            {title:"History", field:"history", vertAlign:"middle", formatter:function(cell, formatterParams, onRendered) {
+                // Show book if true
+                if (cell.getValue()) {
+                    return `
+                        <div class="history-book">
+                            <img class='icon-img' src="../img/books.gif" />
+                        </div>
+                    `
+                }
+            }},
         ],
     });
 
@@ -117,13 +145,19 @@ export function constructTables(which) {
             {title:"Active Queue", field:"queue.numRequests", vertAlign:"middle", formatter(cell, formatterParams, onRendered) {
                 var getReq = cell.getData().requests;
                 var timeload = cell.getData().queue.timeload;
-
+                
                 if (getReq.length > 0) { // There's an empty one...
 
                     var lastReq = getReq[getReq.length - 1];
-                    var qdate = lastReq["received"].datetime;
+
+                    // We need to add 1 hr to due date
+                    // The active queue should display the time at which
+                    // they are available.
+                    var qdate = lastReq.due; // We need due date for queue
 
                     var numReq = getReq.length;
+
+                    var artist = cell.getData().firstname
 
                     var activeQueue = `
                         <div class="active-queue">
@@ -190,7 +224,30 @@ export function constructTables(which) {
             {title:"Priority 10", field:"", vertAlign:"middle", formatter(cell, formatterParams, onRendered) {
                 var returnElem = priorityFormatter(10, cell);
                 return returnElem;
-            }}
+            }},
+            {title:"Pending @ Client", field:"", vertAlign:"right", formatter(cell, formatterParams, onRendered) {
+                
+                return `
+                    <div class="pending">
+                        <div class="pending-count proj">` + cell.getData().pending.count + ` Projects</div>
+                        <div class="pending-count">` + cell.getData().pending.hrs + ` Hours</div>
+                    </div>
+                `
+            }},
+            {title:"Total", field:"", vertAlign:"right", formatter(cell, formatterParams, onRendered) {
+                var totalReq = cell.getData().pending.count + cell.getData().requests.length;
+                var totalHrs = cell.getData().queue.timeload + cell.getData().pending.hrs
+                
+                return `<div class="total-load">
+                            <div class="total-count proj">` + totalReq + ` Projects</div>
+                            <div class="total-count">` + totalHrs + ` Hours</div>
+                        </div>`
+
+
+               
+                
+            }},
+            
             
             // {title:"Code", field:"store.code"},
             // {title:"Industry", field:"industry"},
@@ -214,7 +271,12 @@ export function constructTables(which) {
 
 }
 
-
+/**
+ * 
+ * @param {Number} index The Priority Number, subtract one from this, get the request index
+ * @param {*} cell The cell object of the current column
+ * @returns Returns request data for this request
+ */
 function priorityFormatter (index, cell) {
     var cellData = cell.getData();
     var req = cellData.requests[index - 1];
@@ -223,7 +285,7 @@ function priorityFormatter (index, cell) {
     // Remember to increment for each formatter
 
     try {
-        var grp = req.store.group;
+        var grp = req.group;
         var shrtDate = req.shrtBackDate;
         var rtnElem = `
         <div class="prt-date">
@@ -243,4 +305,11 @@ function priorityFormatter (index, cell) {
     }
 
     return rtnElem;
+}
+
+
+
+function showMessage(dom) {
+    $("#alert").css("display", "flex");
+    $(".content-container").append(dom);
 }

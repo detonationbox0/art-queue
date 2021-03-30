@@ -3,13 +3,16 @@
  * On Document Ready
  * Create Tables, read JSON, and populate tables
  */
- import * as modTables from "./tables.js"
- import * as modData from "./data.js"
+    
+import * as modTables from "./tables.js"
+import * as modData from "./data.js"
+ 
  
 
 
 
 $(function() {
+
 
     console.log("Document Ready...");
 
@@ -22,9 +25,23 @@ $(function() {
 
     // Populate the tables
     myTables.requestsTable.setData(myData.requests);
+    // console.log(myData.artists);
     myTables.artistTable.setData(myData.artists);
     myTables.artistTable.setSort("queue.numRequests", "asc");
 
+
+
 });
 
+/**
+ * The Background of a shown message is clicked
+ * Hide the message.
+ */
+$("#alert").on("click", function() {
+    $(".content-container").empty();
+    $(this).css("display", "none");
+});
 
+$(".content-container").on("click", function(e) {
+    e.stopPropagation();
+});

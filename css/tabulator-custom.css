@@ -3,7 +3,7 @@
   position: relative;
   border: 1px solid #999;
   background-color: white;
-  font-size: 12px;
+  font-size: 11px;
   font-family:Verdana, Arial, Helvetica, sans-serif;
   text-align: left;
   overflow: hidden;
@@ -33,7 +33,7 @@
   background-color: #e6e6e6;
   color: white;
   font-weight: bold;
-  text-decoration: underline;
+  text-decoration: underline !important; /*Not sure why this isn't working... */
   white-space: nowrap;
   overflow: hidden;
   -moz-user-select: none;
@@ -86,7 +86,8 @@
 .tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-title {
   box-sizing: border-box;
   width: 100%;
-  white-space: nowrap;
+  /* white-space: nowrap; */ /*Default*/
+  white-space:normal; 
   overflow: hidden;
   text-overflow: ellipsis;
   vertical-align: bottom;
@@ -159,8 +160,9 @@
 }
 
 .tabulator .tabulator-header .tabulator-col.tabulator-sortable .tabulator-col-title {
-  padding-right: 25px;
-}
+  /* padding-right: 25px; */
+  padding-right: 5px;
+} 
 
 .tabulator .tabulator-header .tabulator-col.tabulator-sortable:hover {
   cursor: pointer;
