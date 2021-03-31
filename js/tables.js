@@ -18,7 +18,7 @@ export function constructTables(which) {
      */
 
     var requestsTable = new Tabulator("#unassigned-requests-table", {
-        layout:"fitData",
+        layout:"fitDataStretch",
         maxHeight:"100%",
         // responsiveLayout:"collapse",
         columns:[
