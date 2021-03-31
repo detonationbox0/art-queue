@@ -74,14 +74,14 @@ export function constructTables(which) {
                 cell.getElement().style.padding = "0px";
                 return `<div class='task-area'>
                             <div class='task-icon'>
-                                <img class='icon-img' src="../img/icon-system.svg" />
+                                <img class='icon-img' src="./img/icon-system.svg" />
                             </div>
                             <div class='task-info'>
                                 <p class='link task-assign'>ArtMgr: Assign Artwork</p>
                                 <p class='task-date'>` + cell.getValue().datetime + `</p>
                             </div>
                             <div class='task-cr'>
-                                ` + (cell.getValue().cr ? `<img class='icon-img' src="../img/icon-artist.svg" />` : ``) + `
+                                ` + (cell.getValue().cr ? `<img class='icon-img' src="./img/icon-artist.svg" />` : ``) + `
                             </div>
                         </div>
                 `
@@ -113,7 +113,7 @@ export function constructTables(which) {
                 if (cell.getValue()) {
                     return `
                         <div class="history-book">
-                            <img class='icon-img' src="../img/books.gif" />
+                            <img class='icon-img' src="./img/books.gif" />
                         </div>
                     `
                 }
@@ -313,14 +313,14 @@ export function reqArtistTable(artistsTable, artist) {
                 cell.getElement().style.padding = "0px";
                 return `<div class='task-area'>
                             <div class='task-icon'>
-                                <img class='icon-img' src="../img/icon-system.svg" />
+                                <img class='icon-img' src="./img/icon-system.svg" />
                             </div>
                             <div class='task-info'>
                                 <p class='link task-assign'>ArtMgr: Assign Artwork</p>
                                 <p class='task-date'>` + cell.getValue().datetime + `</p>
                             </div>
                             <div class='task-cr'>
-                                ` + (cell.getValue().cr ? `<img class='icon-img' src="../img/icon-artist.svg" />` : ``) + `
+                                ` + (cell.getValue().cr ? `<img class='icon-img' src="./img/icon-artist.svg" />` : ``) + `
                             </div>
                         </div>
                 `
