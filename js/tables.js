@@ -1,5 +1,8 @@
 // import * as modApp from "./app.js"
 import * as domConstructor from "./dom-constructor.js"
+
+// var artistTable = undefined;
+
 /**
  * Create the tables required for this application in DOM
  * 
@@ -85,9 +88,11 @@ export function constructTables(which) {
             }, cellClick:function(e, cell){
                 //e - the click event object
                 //cell - cell component
-                console.log(cell.getData());
+                // console.log(cell.getData());
                 var dom = domConstructor.makeDom(cell.getData(), "View Request");
                 showMessage(dom);
+                // console.log(cell.getData());
+                // reqArtistTable(cell.getData(), "Ian") // Default artist
             }},
             {title:"Received", field:"received.as", vertAlign:"middle"},
             {title:"Est Client / AS Due Date", field:"due", vertAlign:"middle"},
@@ -271,8 +276,75 @@ export function constructTables(which) {
 
 }
 
+
 /**
  * 
+ * @param {Array} artistsTable A table of artists, should be the same data as the Artist Availability table
+ * @param {String} artist The artist who's requests we will load
+ */
+export function reqArtistTable(artistsTable, artist) {
+    
+    // artist = "Ian" // DEBUG
+
+    // Get the requested artist's requests
+    for (var i = 0; i < artistsTable.length; i++) {
+        if (artistsTable[i].firstname == artist) {
+            var artistsRequests = artistsTable[i].requests;
+        }
+    }
+
+    //Build artist's request table
+    var artistRequestsTable = new Tabulator("#req-artist-table", {
+        // maxHeight:"100%",
+        data:artistsRequests,
+        columns:[
+            {title:"Pri #", field:"priority", vertAlign:"middle"},
+            {title:"Artist", field:"artist", vertAlign:"middle"},
+            {title:"Industry", field:"industry", vertAlign:"middle"},
+            {title:"Tier", field:"tier", vertAlign:"middle"},
+            {title:"Grp", field:"group", vertAlign:"middle"},
+            {title:"Code", field:"store.code", vertAlign:"middle"},
+            {title:"Company", field:"store.name", vertAlign:"middle"},
+            {title:"Project Kind", field:"kind", vertAlign:"middle"},
+            {title:"Content Attributes", field:"content", vertAlign:"middle"},
+            {title:"Design Attributes", field:"design", vertAlign:"middle"},
+            {title:"Product", field:"store.product", vertAlign:"middle"},
+            {title:"Scheduled Task", field:"task", vertAlign:"middle", formatter:function(cell, formatterParams, onRendered) {
+                cell.getElement().style.padding = "0px";
+                return `<div class='task-area'>
+                            <div class='task-icon'>
+                                <img class='icon-img' src="../img/icon-system.svg" />
+                            </div>
+                            <div class='task-info'>
+                                <p class='link task-assign'>ArtMgr: Assign Artwork</p>
+                                <p class='task-date'>` + cell.getValue().datetime + `</p>
+                            </div>
+                            <div class='task-cr'>
+                                ` + (cell.getValue().cr ? `<img class='icon-img' src="../img/icon-artist.svg" />` : ``) + `
+                            </div>
+                        </div>
+                `
+            }},
+            {title:"Last Action", field:"", vertAlign:"middle", formatter:function(cell, formatterParams, onRendered) {
+                return "Coming Soon..."
+            }},
+            {title:"Live Due Date", field:"", vertAlign:"middle", formatter:function(cell, formatterParams, onRendered) {
+                return "Coming Soon..."
+            }},
+            {title:"Est Client / AS Due Date", field:"", vertAlign:"middle", formatter:function(cell, formatterParams, onRendered) {
+                return "Coming Soon..."
+            }},
+        ]
+        
+    });
+    
+
+}
+    
+
+
+/**
+ * Create the DOM elements that go into the artist table
  * @param {Number} index The Priority Number, subtract one from this, get the request index
  * @param {*} cell The cell object of the current column
  * @returns Returns request data for this request
@@ -308,7 +380,10 @@ function priorityFormatter (index, cell) {
 }
 
 
-
+/**
+ * Displays an empty message box, the contents are a string of HTML elements
+ * @param {String} dom The DOM elements to display within the Message box
+ */
 function showMessage(dom) {
     $("#alert").css("display", "flex");
     $(".content-container").append(dom);

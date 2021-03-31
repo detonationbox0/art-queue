@@ -49,9 +49,6 @@ export function getLists() {
                     "firstname":"Luke",
                     "lastname":"Coleman"
                 },{
-                    "firstname":"Nathan",
-                    "lastname":"Folk"
-                },{
                     "firstname":"Joshua",
                     "lastname":"Keller"
                 },{
@@ -100,8 +97,7 @@ export function getLists() {
 
     var attr = ["Light",
                 "Moderate",
-                "Heavy",
-                null
+                "Heavy"
     ]
 
     var tasks = [   "Make Changes",

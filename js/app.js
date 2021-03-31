@@ -25,13 +25,29 @@ $(function() {
 
     // Populate the tables
     myTables.requestsTable.setData(myData.requests);
-    // console.log(myData.artists);
-    myTables.artistTable.setData(myData.artists);
+    myTables.artistTable.setData(myData.artists); // Remember, .setData is a method!
+    
+    //
+    // DEBUG ARTRIST REQUESTS TABLE
+    //
+    // modTables.reqArtistTable(myData.artists, "Ian");
+
     myTables.artistTable.setSort("queue.numRequests", "asc");
 
+    /**
+     * When the user chooses another artist on the Request Detail page
+     * Update the table with that artist's current requests
+     */
+    $(document.body).on("change", "#req-artist-sel", function() {
+        var artist = this.value;
+        modTables.reqArtistTable(myData.artists, artist);
+    })
+    
 
 
 });
+
+
 
 /**
  * The Background of a shown message is clicked
@@ -45,3 +61,4 @@ $("#alert").on("click", function() {
 $(".content-container").on("click", function(e) {
     e.stopPropagation();
 });
+

@@ -166,7 +166,8 @@
 
 .tabulator .tabulator-header .tabulator-col.tabulator-sortable:hover {
   cursor: pointer;
-  filter: brightness(120%);
+  /* Header Hover Effect */
+  /* filter: brightness(120%); */
 }
 
 .tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort="none"] .tabulator-col-content .tabulator-col-sorter {
@@ -475,7 +476,8 @@
 }
 
 .tabulator-row.tabulator-selectable:hover {
-  filter: brightness(95%);
+  /* Row Hover & Cursor Effects */
+  filter: brightness(95%); 
   cursor: pointer;
 }
 
