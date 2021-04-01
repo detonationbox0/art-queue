@@ -167,7 +167,7 @@ span.link, p.link {
 
 .content-container {
     padding:30px;
-    max-width:800px;
+    max-width:1000px;
     /* min-width:calc(100vw - 80px); */
     background-color:#efeee1;
 }
@@ -285,3 +285,33 @@ hr {
 #req-artist-table {
     max-height:300px;
 }
+
+/* Prevent Scrolling */
+.my-body-noscroll-class {
+    overflow: hidden;
+}
+
+.last-action-area {
+    white-space:normal;
+    /* height:100px; */
+}
+
+.live-due-area {
+    white-space:normal;
+    /* height:100px; */
+}
+
+
+.last-action-name {
+    font-weight:bolder;
+}
+
+
+
+#req-artist-table {
+    font-size: 7pt !important;
+}
+
+/* #req-artist-table .tabulator-row .tabulator-cell {
+    white-space:normal;
+} */

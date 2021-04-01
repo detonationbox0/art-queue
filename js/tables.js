@@ -296,19 +296,20 @@ export function reqArtistTable(artistsTable, artist) {
     //Build artist's request table
     var artistRequestsTable = new Tabulator("#req-artist-table", {
         // maxHeight:"100%",
+        columnMinWidth:20,
         data:artistsRequests,
         columns:[
-            {title:"Pri #", field:"priority", vertAlign:"middle"},
+            {title:"Pri #", field:"priority", vertAlign:"middle", width:20},
             {title:"Artist", field:"artist", vertAlign:"middle"},
             {title:"Industry", field:"industry", vertAlign:"middle"},
             {title:"Tier", field:"tier", vertAlign:"middle"},
-            {title:"Grp", field:"group", vertAlign:"middle"},
+            {title:"G", field:"group", vertAlign:"middle", width:20},
             {title:"Code", field:"store.code", vertAlign:"middle"},
-            {title:"Company", field:"store.name", vertAlign:"middle"},
-            {title:"Project Kind", field:"kind", vertAlign:"middle"},
-            {title:"Content Attributes", field:"content", vertAlign:"middle"},
-            {title:"Design Attributes", field:"design", vertAlign:"middle"},
-            {title:"Product", field:"store.product", vertAlign:"middle"},
+            {title:"Company", field:"store.name", vertAlign:"middle", width:110, formatter:"textarea"},
+            {title:"Project Kind", field:"kind", vertAlign:"middle", width:87, formatter:"textarea"},
+            {title:"Content Attributes", field:"content", width:55, vertAlign:"middle"},
+            {title:"Design Attributes", field:"design", width:55, vertAlign:"middle"},
+            {title:"Product", field:"store.product", width:61, formatter:"textarea", vertAlign:"middle"},
             {title:"Scheduled Task", field:"task", vertAlign:"middle", formatter:function(cell, formatterParams, onRendered) {
                 cell.getElement().style.padding = "0px";
                 return `<div class='task-area'>
@@ -325,14 +326,51 @@ export function reqArtistTable(artistsTable, artist) {
                         </div>
                 `
             }},
-            {title:"Last Action", field:"", vertAlign:"middle", formatter:function(cell, formatterParams, onRendered) {
-                return "Coming Soon..."
+            {title:"Last Action", field:"task", vertAlign:"middle", width:90, formatter:function(cell, formatterParams, onRendered) {
+               
+                var cellData = cell.getValue();
+                var dom = `
+                    <div class="last-action-area">
+                        <div class="last-action-name">${cellData.title}</div>
+                        <div class="last-action-datetime">${cellData.datetime}</div>
+                    </div>
+                `
+                
+                return dom;
+                
             }},
-            {title:"Live Due Date", field:"", vertAlign:"middle", formatter:function(cell, formatterParams, onRendered) {
-                return "Coming Soon..."
+            {title:"Live Due Date", field:"", vertAlign:"middle", width:85, formatter:function(cell, formatterParams, onRendered) {
+                var cellData = cell.getData();
+
+                //Convert cellData.time (decimal) to hrs & seconds
+                var n = new Date(0,0);
+                n.setSeconds(+cellData.time * 60 * 60);
+                var nSplit = n.toTimeString().slice(0, 8).split(":");
+                var timeString = `${(Number(nSplit[0]) == 0 ? `` : `${Number(nSplit[0])} Hours `)}${Number(nSplit[1])} Minutes`
+                
+                var dom = `
+                    <div class="live-due-area">
+                        <div class="live-due-name">${timeString}</div>
+                        <div class="live-due-datetime">${cellData.due}</div>
+                    </div>
+                `
+
+                return dom;
+                
             }},
             {title:"Est Client / AS Due Date", field:"", vertAlign:"middle", formatter:function(cell, formatterParams, onRendered) {
-                return "Coming Soon..."
+                var cellData = cell.getData();
+
+                // Add 48 hours to task's datetime
+                var aheadDate = new Date(new Date(cellData.task.datetime).setHours(new Date().getHours() + 48));
+
+                // Make readable, in EST
+                aheadDate = aheadDate.toLocaleString();
+                
+                return aheadDate
+
+
+
             }},
         ]
         
@@ -386,5 +424,8 @@ function priorityFormatter (index, cell) {
  */
 function showMessage(dom) {
     $("#alert").css("display", "flex");
+    // Prevent background scrolling
+    // https://stackoverflow.com/questions/19701289/disable-scrolling-while-popup-active/19701506
+    $("body").addClass("my-body-noscroll-class");
     $(".content-container").append(dom);
 }

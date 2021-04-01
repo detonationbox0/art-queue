@@ -174,12 +174,9 @@ export function makeDom(tableData, domType) {
                         </div>
 
                         <button id="assign-artist">Assign Artist</button>
-
                     </div>
                     <div id="req-assignments-bottom">
-                        <h3
                         <div id="req-artist-table">
-                        
                         </div>
                     </div>
                 </div>
