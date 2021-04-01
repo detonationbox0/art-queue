@@ -55,6 +55,9 @@ $(function() {
  */
 $("#alert").on("click", function() {
     $(".content-container").empty();
+    // Resume background scrolling
+    // https://stackoverflow.com/questions/19701289/disable-scrolling-while-popup-active/19701506
+    $("body").removeClass("my-body-noscroll-class");
     $(this).css("display", "none");
 });
 

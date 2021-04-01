@@ -102,8 +102,7 @@ export function getLists() {
 
     var tasks = [   "Make Changes",
                     "Create Logo",
-                    "Update Pricing",
-                    null
+                    "Update Pricing"
             ]
 
     var products = [    "100# Gloss Postcard",
