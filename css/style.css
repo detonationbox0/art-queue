@@ -46,7 +46,6 @@ html, body {
 }
 
 #main-content {
-    background-color:rgba(105,184,235,.3);
     height:100%;
     /* padding:10px; */
 }
@@ -306,12 +305,51 @@ hr {
     font-weight:bolder;
 }
 
-
+.est-due-date {
+    white-space:normal;
+}
 
 #req-artist-table {
     font-size: 7pt !important;
 }
 
+.tabs {
+    display:flex;
+ 
+    /* padding-left:20px; */
+}
+
+.tab {
+    color:#00f;
+    border:1px solid rgba(0,0,0,.1);
+    padding:4px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.active-tab {
+    background-color:white;
+    border-top:2px solid orange;
+}
+
+#tab-container {
+    /* padding:20px; */
+}
+
+.table-area {
+    background-color:rgba(105,184,235,.3);
+
+}
+
+.status {
+    text-align:center;
+    width:50px;
+    padding:5px;
+}
+
+.hidden {
+    display:none;
+}
 /* #req-artist-table .tabulator-row .tabulator-cell {
     white-space:normal;
 } */

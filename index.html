@@ -57,26 +57,55 @@
       <!-- Contains the Main Content area-->
       <div id="main-content">
 
+        <div class="tabs">
+          <button class="tab active-tab" value="unassigned-requests" >Unassigned Requests</button>
+          <button class="tab" value="workloads">Workloads</button>
+        </div>
+
         <!-- Table 1 - List of unassigned items -->
-        <div id="unassigned-requests">
-            <div class="table-header" id="unassigned-requests-head">
-              <div class="table-title">
-                <h3>Unassigned Requests</h3>
+
+        <div id="tab-container">
+          <div class="table-area" id="unassigned-requests">
+              <div class="table-header" id="unassigned-requests-head">
+                <div class="table-title">
+                  <h3>Unassigned Requests</h3>
+                </div>
+                <div class="table-controls">
+                  <button>Button 1</button>
+                  <button>Button 3</button>
+                  <button>Button 3</button>
+                </div>
               </div>
-              <div class="table-buttons">
+
+              <div class="table-area" id="unassigned-requests-table">
+
+              </div>
+              
+            </div>
+        </div>
+        <div class="table-area hidden" id="workloads">
+            <div class="table-header" id="workloads-head">
+              <div class="table-title">
+                <h3>Workloads</h3>
+              </div>
+              <div class="table-controls">
+                <select id="workloads-select-artist">
+                  <option value="all" selected >-- All Artists --</option>
+                </select>
                 <button>Button 1</button>
                 <button>Button 3</button>
                 <button>Button 3</button>
               </div>
             </div>
 
-            <div class="table-area" id="unassigned-requests-table">
+            <div class="table-area" id="workloads-table">
 
             </div>
-
-        </div>
-
-        <div id="artist-availability">
+            
+          </div>
+        
+        <!-- Table 3 - List of unassigned items -->
+        <div class="table-area" id="artist-availability">
           <div class="table-header" id="artist-availability-head">
             <div class="table-title">
               <h3>Artist Availability</h3>

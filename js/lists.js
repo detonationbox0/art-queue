@@ -230,6 +230,12 @@ export function getLists() {
                 "TheresaC"
             ];
 
+
+        var status = [
+            "Pending",
+            "N/A",
+        ];
+
     return {
         "artists":artists, // List of artists
         "clients":clients, // List of clients
@@ -239,6 +245,7 @@ export function getLists() {
         "products":products, // List of products in .NET
         "as":accs, // List of account specialists
         "attr":attr, // List of attributes
-        "tasks":tasks // List of attributes
+        "tasks":tasks, // List of attributes
+        "status":status // List of statuses for Creative Proof, AS Proof, and Print
     }
 };
