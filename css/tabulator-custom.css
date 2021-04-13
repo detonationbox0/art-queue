@@ -1,7 +1,7 @@
 /* Tabulator v4.9.3 (c) Oliver Folkerd */
 .tabulator {
   position: relative;
-  border: 1px solid #999;
+  /* border: 1px solid #999; */
   background-color: white;
   font-size: 11px;
   font-family:Verdana, Arial, Helvetica, sans-serif;
@@ -141,7 +141,7 @@
 .tabulator .tabulator-header .tabulator-col .tabulator-header-filter {
   position: relative;
   box-sizing: border-box;
-  margin-top: 2px;
+  margin-top: 5px;
   width: 100%;
   text-align: center;
 }
@@ -158,6 +158,12 @@
   width: 0;
   height: 0;
 }
+
+.tabulator .tabulator-header .tabulator-col .tabulator-header-filter input {
+  padding:1px !important;
+  font-size:8pt;
+}
+
 
 .tabulator .tabulator-header .tabulator-col.tabulator-sortable .tabulator-col-title {
   /* padding-right: 25px; */

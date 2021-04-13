@@ -9,6 +9,7 @@ import * as domConstructor from "./dom-constructor.js"
  * @returns {Object} tables Contains the data for the application
  * @returns {Object} tables.requestsTable The Tabulator table object for the Unassigned Requests
  * @returns {Object} tables.artistTable The Tabulator table object for the Artists
+ * @returns {Object} tables.workloadTable The Tabulator table object for the Workloads
  */
 
 export function constructTables(which) {
@@ -52,7 +53,7 @@ export function constructTables(which) {
 
                 }
             },
-            {title:"Company", vertAlign:"middle", field:"store.name", formatter:function(cell, formatterParams, onRendered){
+            {title:"Company", vertAlign:"middle", field:"store.name", headerFilter:"input",formatter:function(cell, formatterParams, onRendered){
                     // http://tabulator.info/docs/4.9/format#format-custom
                     var uid = cell.getRow().getData().uid;
                     return `<span class='link req' uid='` + uid + `'>` + cell.getValue() + `</span>`; //return the contents of the cell;
@@ -119,6 +120,164 @@ export function constructTables(which) {
                 }
             }},
         ],
+    });
+
+        
+    /**
+     * Create Workloads Table
+     */
+
+    var workloadTable = new Tabulator("#workloads-table", {
+        layout:"fitData",
+        maxHeight:"500px",
+        // responsiveLayout:"collapse",
+        columns:[
+                {title:"", field:"", vertAlign:"middle", formatter:function(cell, formatterParams, onRendered){
+                    // http://tabulator.info/docs/4.9/format#format-custom
+                    // Create Check Box Inputs
+                    var uid = cell.getRow().getData().uid;
+                    return `<input type="checkbox" class="chk" uid='` + uid + `'>`; //return the contents of the cell;
+                }, cellClick:function(e, cell) {
+                    // http://tabulator.info/docs/4.0/callbacks#cell
+                    // Highlight Row if Checked
+                    var uid = cell.getRow().getData().uid;
+                    var rowElem = cell.getRow().getElement();
+                    var rowClass = $(rowElem).attr("class");
+
+                    var isChecked = $(".chk[uid='" + uid + "'").prop("checked");
+
+                    if (isChecked) {
+                        // Highlight the row
+                        rowElem.style.backgroundColor = "rgb(101, 255, 255)"
+                    } else {
+                        // Unhighlight the row
+                        // Retain the every-other-row background colors
+                        if (rowClass.includes("even")) {
+                            console.log("Even cell")
+                            rowElem.style.backgroundColor = "#EFEFEF"
+                        } else {
+                            cell.getRow().getElement().style.backgroundColor = "#FFF"
+                        }
+                    }
+
+                }
+            },
+            {title:"Pri #", vertAlign:"middle", field:"priority"},
+            {title:"Artist", vertAlign:"middle", field:"artist"},
+            {title:"Industry", vertAlign:"middle", field:"industry"},
+            {title:"Tier", vertAlign:"middle", field:"tier"},
+            {title:"Grp", vertAlign:"middle", field:"group"},
+            {title:"Code", vertAlign:"middle", field:"store.code"},
+            {title:"Name", vertAlign:"middle", field:"store.name"},
+            {title:"Project Kind", vertAlign:"middle", field:"kind"},
+            {title:"Content Attributes", vertAlign:"middle", field:"content"},
+            {title:"Design Attributes", vertAlign:"middle", field:"design"},
+            {title:"Product", vertAlign:"middle", field:"store.product"},
+            {title:"Scheduled Task", vertAlign:"middle", field:"task", vertAlign:"middle", formatter:function(cell, formatterParams, onRendered) {
+                // If it's a system task, use system icon
+                cell.getElement().style.padding = "0px";
+                return `<div class='task-area'>
+                            <div class='task-icon'>
+                                <img class='icon-img' src="./img/icon-system.svg" />
+                            </div>
+                            <div class='task-info'>
+                                <p class='link task-assign'>ArtMgr: Assign Artwork</p>
+                                <p class='task-date'>` + cell.getValue().datetime + `</p>
+                            </div>
+                            <div class='task-cr'>
+                                ` + (cell.getValue().cr ? `<img class='icon-img' src="./img/icon-artist.svg" />` : ``) + `
+                            </div>
+                        </div>
+                `
+            }, cellClick:function(e, cell){
+                //e - the click event object
+                //cell - cell component
+                // console.log(cell.getData());
+                var dom = domConstructor.makeDom(cell.getData(), "View Request");
+                showMessage(dom);
+                // console.log(cell.getData());
+                // reqArtistTable(cell.getData(), "Ian") // Default artist
+            }},
+            {title:"Last Action", field:"task", vertAlign:"middle", formatter:function(cell, formatterParams, onRendered) {
+               
+                var cellData = cell.getValue();
+                var dom = `
+                    <div class="last-action-area">
+                        <div class="last-action-name">${cellData.title}</div>
+                        <div class="last-action-datetime">${cellData.datetime}</div>
+                    </div>
+                `
+                
+                return dom;
+                
+            }},
+            {title:"Live Due Date", field:"due"},
+            {title:"History", field:"history", vertAlign:"middle", formatter:function(cell, formatterParams, onRendered) {
+                // Show book if true
+                if (cell.getValue()) {
+                    return `
+                        <div class="history-book">
+                            <img class='icon-img' src="./img/books.gif" />
+                        </div>
+                    `
+                }
+            }},
+            {title:"Creative Proof", vertAlign:"middle", field:"cp", formatter:function(cell, formatterParams, onRendered) {
+                var thisStatus = cell.getValue();
+                
+                var colors = {
+                    "Pending":{
+                        "back":"rgb(255, 250, 46)",
+                        "text":"#000"
+                    },
+                    "N/A":{
+                        "back":"rgb(116, 116, 116)",
+                        "text":"#FFF"
+                    }
+                }
+
+                return `
+                    <div class="status" style="background-color:${colors[thisStatus]["back"]};color:${colors[thisStatus]["text"]}">${thisStatus}</div>
+                `
+            }},
+            {title:"AS Proof", vertAlign:"middle", field:"ap", formatter:function(cell, formatterParams, onRendered) {
+                var thisStatus = cell.getValue();
+                
+                var colors = {
+                    "Pending":{
+                        "back":"rgb(255, 250, 46)",
+                        "text":"#000"
+                    },
+                    "N/A":{
+                        "back":"rgb(116, 116, 116)",
+                        "text":"#FFF"
+                    }
+                }
+
+                return `
+                    <div class="status" style="background-color:${colors[thisStatus]["back"]};color:${colors[thisStatus]["text"]}">${thisStatus}</div>
+                `
+            }},
+            {title:"Print", vertAlign:"middle", field:"p", formatter:function(cell, formatterParams, onRendered) {
+                var thisStatus = cell.getValue();
+                
+                var colors = {
+                    "Pending":{
+                        "back":"rgb(255, 250, 46)",
+                        "text":"#000"
+                    },
+                    "N/A":{
+                        "back":"rgb(116, 116, 116)",
+                        "text":"#FFF"
+                    }
+                }
+
+                return `
+                    <div class="status" style="background-color:${colors[thisStatus]["back"]};color:${colors[thisStatus]["text"]}">${thisStatus}</div>
+                `
+            }},
+        ]
+
     });
 
     
@@ -248,8 +407,7 @@ export function constructTables(which) {
                             <div class="total-count">` + totalHrs + ` Hours</div>
                         </div>`
 
-
-               
+              
                 
             }},
             
@@ -267,11 +425,22 @@ export function constructTables(which) {
             // {title:"Design Time", field:"time"},
             // {title:"History", field:"history"},
         ],
+        rowClick:function(e, row) {
+            var clickedArtist= row.getData().firstname;
+            workloadTable.setFilter("artist", "=", clickedArtist)
+            
+            console.log(clickedArtist);
+        }
     });
+
+    
+
+
 
     return {
             "requestsTable":requestsTable,
-            "artistTable":artistTable
+            "artistTable":artistTable,
+            "workloadTable":workloadTable
     };
 
 }
@@ -284,14 +453,26 @@ export function constructTables(which) {
  */
 export function reqArtistTable(artistsTable, artist) {
     
-    // artist = "Ian" // DEBUG
-
     // Get the requested artist's requests
     for (var i = 0; i < artistsTable.length; i++) {
         if (artistsTable[i].firstname == artist) {
             var artistsRequests = artistsTable[i].requests;
+
+
         }
     }
+
+    // Update Priority Override Numbers
+    $("select[name='Priority Override']").empty()
+    for (var i = 0; i < artistsRequests.length; i++) {
+
+        $("select[name='Priority Override']").append(`
+            <option valaue="${i}" ${i == 0 ? `selected` : ``}>${i}</option>
+        `)
+    
+    }
+
+    
 
     //Build artist's request table
     var artistRequestsTable = new Tabulator("#req-artist-table", {
@@ -358,7 +539,7 @@ export function reqArtistTable(artistsTable, artist) {
                 return dom;
                 
             }},
-            {title:"Est Client / AS Due Date", field:"", vertAlign:"middle", formatter:function(cell, formatterParams, onRendered) {
+            {title:"Est Client / AS Due Date", field:"", vertAlign:"middle", width:74, formatter:function(cell, formatterParams, onRendered) {
                 var cellData = cell.getData();
 
                 // Add 48 hours to task's datetime
@@ -367,9 +548,8 @@ export function reqArtistTable(artistsTable, artist) {
                 // Make readable, in EST
                 aheadDate = aheadDate.toLocaleString();
                 
-                return aheadDate
-
-
+                // Put in div, allows white-space:normal to wrap text
+                return `<div class="est-due-date">${aheadDate}</div>`
 
             }},
         ]

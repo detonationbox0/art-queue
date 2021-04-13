@@ -177,7 +177,9 @@ export function createRequest (artist) {
     var rndTask = listData.tasks[Math.floor(Math.random() * listData.tasks.length)];
     var rndAs = listData.as[Math.floor(Math.random() * listData.as.length)];
     var rndGrp = ["E", "F", "G"][Math.floor(Math.random() * 3)];
-
+    var rndCp = listData.status[Math.floor(Math.random() * listData.status.length)];
+    var rndAp = listData.status[Math.floor(Math.random() * listData.status.length)];
+    var rndP = listData.status[Math.floor(Math.random() * listData.status.length)];
     /* Random date between today and 10 days ago */
     var today = new Date();
     var daysAgo = new Date();
@@ -232,9 +234,9 @@ export function createRequest (artist) {
                 "datetime":"Fri 2-26-21 9:02AM" 
             }
         ],
-        "cp":false, 
-        "ap":false,
-        "p":false
+        "cp":rndCp, 
+        "ap":rndAp,
+        "p":rndP
     };
 
     return genRequest
