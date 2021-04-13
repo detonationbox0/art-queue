@@ -11,7 +11,7 @@ export function makeDom(tableData, domType) {
     switch(domType) {
         case "View Request": // ----------------------------------------------
 
-            console.log(tableData)
+            console.log(tableData.artist)
 
             //Convert tableData.time (decimal) to hrs & seconds
             var n = new Date(0,0);
@@ -145,22 +145,22 @@ export function makeDom(tableData, domType) {
                         <div class="input-area">
                             <label for="Assign To" class="input-label">Assign To</label>
                             <select id="req-artist-sel" name="Assign To">
-                                <option value="Ian">Ian</option>
-                                <option value="Berto">Berto</option>
-                                <option value="Lisa">Lisa</option>
-                                <option value="Peter">Peter</option>
-                                <option value="Matt">Matt</option>
-                                <option value="Breanna">Breanna</option>
-                                <option value="Kristen">Kristen</option>
-                                <option value="Rita">Rita</option>
-                                <option value="Alaina">Alaina</option>
-                                <option value="Christian">Christian</option>
-                                <option value="Jeff">Jeff</option>
-                                <option value="Luke">Luke</option>
-                                <option value="Joshua">Joshua</option>
-                                <option value="Luis">Luis</option>
-                                <option value="Emily">Emily</option>
-                                <option value="Null" selected>Unassigned</option>
+                                <option value="Ian" ${tableData.artist == "Ian" ? "selected" : ""}>Ian</option>
+                                <option value="Berto" ${tableData.artist == "Berto" ? "selected" : ""}>Berto</option>
+                                <option value="Lisa" ${tableData.artist == "Lisa" ? "selected" : ""}>Lisa</option>
+                                <option value="Peter" ${tableData.artist == "Peter" ? "selected" : ""}>Peter</option>
+                                <option value="Matt" ${tableData.artist == "Matt" ? "selected" : ""}>Matt</option>
+                                <option value="Breanna" ${tableData.artist == "Breanna" ? "selected" : ""}>Breanna</option>
+                                <option value="Kristen" ${tableData.artist == "Kristen" ? "selected" : ""}>Kristen</option>
+                                <option value="Rita" ${tableData.artist == "Rita" ? "selected" : ""}>Rita</option>
+                                <option value="Alaina" ${tableData.artist == "Alaina" ? "selected" : ""}>Alaina</option>
+                                <option value="Christian" ${tableData.artist == "Christian" ? "selected" : ""}>Christian</option>
+                                <option value="Jeff" ${tableData.artist == "Jeff" ? "selected" : ""}>Jeff</option>
+                                <option value="Luke" ${tableData.artist == "Luke" ? "selected" : ""}>Luke</option>
+                                <option value="Joshua" ${tableData.artist == "Joshua" ? "selected" : ""}>Joshua</option>
+                                <option value="Luis" ${tableData.artist == "Luis" ? "selected" : ""}>Luis</option>
+                                <option value="Emily" ${tableData.artist == "Emily" ? "selected" : ""}>Emily</option>
+                                <option value="Null" ${String(tableData.artist) == "null" ? "selected" : ""}>Unassigned</option>
                             </select>
                         </div>
 

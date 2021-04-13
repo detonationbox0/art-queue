@@ -7,9 +7,6 @@
 import * as modTables from "./tables.js"
 import * as modData from "./data.js"
  
- 
-
-
 
 $(function() {
 
@@ -43,7 +40,7 @@ $(function() {
             });
 
             // Populate the workloads artist selection
-            $("#workloads-select-artist").append(`
+            $("#workloads-select-artist-vsb").append(`
                 <option value="${myData.artists[i].firstname}">${myData.artists[i].firstname}</option>
             `)
         }
@@ -79,8 +76,8 @@ $(function() {
                 $(this).addClass("active-tab");
                 $("button[value='unassigned-requests']").removeClass("active-tab");
 
-                myTables.workloadTable.redraw();
                 myTables.workloadTable.setSort("artist", "asc"); // Broken Table Fix
+                myTables.workloadTable.redraw(true);
 
             } else {
 
@@ -93,7 +90,7 @@ $(function() {
                 $("button[value='workloads']").removeClass("active-tab");
             }
 
-
+            myTables.workloadTable.redraw();
         })
 
     /** ############################################################################################ ↓
@@ -111,6 +108,25 @@ $(function() {
             
             // alert($(this).val());
         });
+
+        // vanillaSelectBox
+        let mySelect = new vanillaSelectBox("#workloads-select-artist-vsb",{
+            maxWidth: 200,
+            maxHeight: 400,
+            minWidth: -1,
+            placeHolder:"-- All Artists ---"
+        });
+
+        $("#workloads-select-artist-vsb").on("change", function() {
+            if ($(this).val().length == 0) {
+                myTables.workloadTable.clearFilter();
+            } else {
+                console.log($(this).val().join(" "))
+                myTables.workloadTable.setFilter("artist", "in", $(this).val());;
+            }
+        });
+
+
 
         // If the user clicks on an artist in the Artist table, filter the workloads table!
         console.log(myTables.artistTable);

@@ -488,11 +488,11 @@
 }
 
 .tabulator-row.tabulator-selected {
-  background-color: #9ABCEA;
+  background-color: rgb(101, 255, 255);
 }
 
 .tabulator-row.tabulator-selected:hover {
-  background-color: #769BCC;
+  background-color: rgb(101, 255, 255);
   cursor: pointer;
 }
 

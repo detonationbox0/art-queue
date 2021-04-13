@@ -23,37 +23,42 @@ export function constructTables(which) {
         maxHeight:"100%",
         // responsiveLayout:"collapse",
         columns:[
-            {title:"", field:"", vertAlign:"middle", formatter:function(cell, formatterParams, onRendered){
-                    // http://tabulator.info/docs/4.9/format#format-custom
-                    // Create Check Box Inputs
-                    var uid = cell.getRow().getData().uid;
-                    return `<input type="checkbox" class="chk" uid='` + uid + `'>`; //return the contents of the cell;
-                }, cellClick:function(e, cell) {
-                    // http://tabulator.info/docs/4.0/callbacks#cell
-                    // Highlight Row if Checked
-                    var uid = cell.getRow().getData().uid;
-                    var rowElem = cell.getRow().getElement();
-                    var rowClass = $(rowElem).attr("class");
+            {formatter:"rowSelection", titleFormatter:"rowSelection",vertAlign:"middle", hozAlign:"center", headerSort:false},
+            /* ----------------
+               ORIGINAL SELECTION ROW
+               Didn't need, turns out Row Selection is built in http://tabulator.info/docs/4.9/format
+            */
+            // {title:"", field:"", vertAlign:"middle", formatter:function(cell, formatterParams, onRendered){
+            //         // http://tabulator.info/docs/4.9/format#format-custom
+            //         // Create Check Box Inputs
+            //         var uid = cell.getRow().getData().uid;
+            //         return `<input type="checkbox" class="chk" uid='` + uid + `'>`; //return the contents of the cell;
+            //     }, cellClick:function(e, cell) {
+            //         // http://tabulator.info/docs/4.0/callbacks#cell
+            //         // Highlight Row if Checked
+            //         var uid = cell.getRow().getData().uid;
+            //         var rowElem = cell.getRow().getElement();
+            //         var rowClass = $(rowElem).attr("class");
 
-                    var isChecked = $(".chk[uid='" + uid + "'").prop("checked");
+            //         var isChecked = $(".chk[uid='" + uid + "'").prop("checked");
 
-                    if (isChecked) {
-                        // Highlight the row
-                        rowElem.style.backgroundColor = "rgb(101, 255, 255)"
-                    } else {
-                        // Unhighlight the row
-                        // Retain the every-other-row background colors
-                        if (rowClass.includes("even")) {
-                            console.log("Even cell")
-                            rowElem.style.backgroundColor = "#EFEFEF"
-                        } else {
-                            cell.getRow().getElement().style.backgroundColor = "#FFF"
-                        }
-                    }
+            //         if (isChecked) {
+            //             // Highlight the row
+            //             rowElem.style.backgroundColor = "rgb(101, 255, 255)"
+            //         } else {
+            //             // Unhighlight the row
+            //             // Retain the every-other-row background colors
+            //             if (rowClass.includes("even")) {
+            //                 console.log("Even cell")
+            //                 rowElem.style.backgroundColor = "#EFEFEF"
+            //             } else {
+            //                 cell.getRow().getElement().style.backgroundColor = "#FFF"
+            //             }
+            //         }
 
-                }
-            },
-            {title:"Company", vertAlign:"middle", field:"store.name", headerFilter:"input",formatter:function(cell, formatterParams, onRendered){
+            //     }
+            // },
+            {title:"Company", vertAlign:"middle", field:"store.name",formatter:function(cell, formatterParams, onRendered){
                     // http://tabulator.info/docs/4.9/format#format-custom
                     var uid = cell.getRow().getData().uid;
                     return `<span class='link req' uid='` + uid + `'>` + cell.getValue() + `</span>`; //return the contents of the cell;
@@ -130,48 +135,20 @@ export function constructTables(which) {
     var workloadTable = new Tabulator("#workloads-table", {
         layout:"fitData",
         maxHeight:"500px",
+        columnMinWidth:0,
         // responsiveLayout:"collapse",
         columns:[
-                {title:"", field:"", vertAlign:"middle", formatter:function(cell, formatterParams, onRendered){
-                    // http://tabulator.info/docs/4.9/format#format-custom
-                    // Create Check Box Inputs
-                    var uid = cell.getRow().getData().uid;
-                    return `<input type="checkbox" class="chk" uid='` + uid + `'>`; //return the contents of the cell;
-                }, cellClick:function(e, cell) {
-                    // http://tabulator.info/docs/4.0/callbacks#cell
-                    // Highlight Row if Checked
-                    var uid = cell.getRow().getData().uid;
-                    var rowElem = cell.getRow().getElement();
-                    var rowClass = $(rowElem).attr("class");
-
-                    var isChecked = $(".chk[uid='" + uid + "'").prop("checked");
-
-                    if (isChecked) {
-                        // Highlight the row
-                        rowElem.style.backgroundColor = "rgb(101, 255, 255)"
-                    } else {
-                        // Unhighlight the row
-                        // Retain the every-other-row background colors
-                        if (rowClass.includes("even")) {
-                            console.log("Even cell")
-                            rowElem.style.backgroundColor = "#EFEFEF"
-                        } else {
-                            cell.getRow().getElement().style.backgroundColor = "#FFF"
-                        }
-                    }
-
-                }
-            },
-            {title:"Pri #", vertAlign:"middle", field:"priority"},
+            {formatter:"rowSelection", titleFormatter:"rowSelection",vertAlign:"middle", hozAlign:"center", headerSort:false},
+            {title:"P #", vertAlign:"middle", width:19, field:"priority"},
             {title:"Artist", vertAlign:"middle", field:"artist"},
             {title:"Industry", vertAlign:"middle", field:"industry"},
             {title:"Tier", vertAlign:"middle", field:"tier"},
-            {title:"Grp", vertAlign:"middle", field:"group"},
+            {title:"G", vertAlign:"middle", width:19, field:"group"},
             {title:"Code", vertAlign:"middle", field:"store.code"},
             {title:"Name", vertAlign:"middle", field:"store.name"},
             {title:"Project Kind", vertAlign:"middle", field:"kind"},
-            {title:"Content Attributes", vertAlign:"middle", field:"content"},
-            {title:"Design Attributes", vertAlign:"middle", field:"design"},
+            {title:"Content Attributes", vertAlign:"middle", width:77, field:"content"},
+            {title:"Design Attributes", vertAlign:"middle", width:77, field:"design"},
             {title:"Product", vertAlign:"middle", field:"store.product"},
             {title:"Scheduled Task", vertAlign:"middle", field:"task", vertAlign:"middle", formatter:function(cell, formatterParams, onRendered) {
                 // If it's a system task, use system icon
@@ -195,6 +172,10 @@ export function constructTables(which) {
                 // console.log(cell.getData());
                 var dom = domConstructor.makeDom(cell.getData(), "View Request");
                 showMessage(dom);
+
+                // We know an artist is assigned. So we need to load that table
+                reqArtistTable(artistTable.getData(), cell.getData().artist, cell.getData().priority);
+
                 // console.log(cell.getData());
                 // reqArtistTable(cell.getData(), "Ian") // Default artist
             }},
@@ -222,7 +203,7 @@ export function constructTables(which) {
                     `
                 }
             }},
-            {title:"Creative Proof", vertAlign:"middle", field:"cp", formatter:function(cell, formatterParams, onRendered) {
+            {title:"Creative Proof", vertAlign:"middle", field:"cp", width:69, formatter:function(cell, formatterParams, onRendered) {
                 var thisStatus = cell.getValue();
                 
                 var colors = {
@@ -425,12 +406,12 @@ export function constructTables(which) {
             // {title:"Design Time", field:"time"},
             // {title:"History", field:"history"},
         ],
-        rowClick:function(e, row) {
-            var clickedArtist= row.getData().firstname;
-            workloadTable.setFilter("artist", "=", clickedArtist)
+        // rowClick:function(e, row) {
+        //     var clickedArtist= row.getData().firstname;
+        //     workloadTable.setFilter("artist", "=", clickedArtist)
             
-            console.log(clickedArtist);
-        }
+        //     console.log(clickedArtist);
+        // }
     });
 
     
@@ -450,15 +431,14 @@ export function constructTables(which) {
  * 
  * @param {Array} artistsTable A table of artists, should be the same data as the Artist Availability table
  * @param {String} artist The artist who's requests we will load
+ * @param {Number} priority (Optional) The priority to hightight
  */
-export function reqArtistTable(artistsTable, artist) {
+export function reqArtistTable(artistsTable, artist, priority) {
     
     // Get the requested artist's requests
     for (var i = 0; i < artistsTable.length; i++) {
         if (artistsTable[i].firstname == artist) {
             var artistsRequests = artistsTable[i].requests;
-
-
         }
     }
 
@@ -477,10 +457,24 @@ export function reqArtistTable(artistsTable, artist) {
     //Build artist's request table
     var artistRequestsTable = new Tabulator("#req-artist-table", {
         // maxHeight:"100%",
-        columnMinWidth:20,
+        columnMinWidth:0,
+        // layout:"fitDataStretch",
         data:artistsRequests,
         columns:[
-            {title:"Pri #", field:"priority", vertAlign:"middle", width:20},
+            {title:"Pri #", field:"priority", vertAlign:"middle", width:20, formatter:function(cell, formatterParams, onRendered) {
+
+                // Highlight this row, if the priority matches the the priority parameter
+                // sent to this function.
+                var rowPriority = cell.getRow().getData().priority;
+                if (rowPriority == priority) {
+                    console.log("Highlight row:");
+                    console.log(cell.getRow().getData());
+                    cell.getRow().select();
+                }
+
+                // Regardless, return the priority number so that something shows up in this column.
+                return cell.getData().priority;
+            }},
             {title:"Artist", field:"artist", vertAlign:"middle"},
             {title:"Industry", field:"industry", vertAlign:"middle"},
             {title:"Tier", field:"tier", vertAlign:"middle"},
@@ -552,9 +546,10 @@ export function reqArtistTable(artistsTable, artist) {
                 return `<div class="est-due-date">${aheadDate}</div>`
 
             }},
-        ]
+        ],
         
     });
+
     
 
 }
@@ -608,4 +603,6 @@ function showMessage(dom) {
     // https://stackoverflow.com/questions/19701289/disable-scrolling-while-popup-active/19701506
     $("body").addClass("my-body-noscroll-class");
     $(".content-container").append(dom);
+
+
 }
