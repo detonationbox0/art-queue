@@ -130,7 +130,7 @@ export function loadData() {
 
     artists.forEach(obj => {
         for (var i = 0; i < obj.requests.length; i++) {
-            obj.requests[i].priority = i;
+            obj.requests[i].priority = i + 1;
         }
     })
 
@@ -177,9 +177,46 @@ export function createRequest (artist) {
     var rndTask = listData.tasks[Math.floor(Math.random() * listData.tasks.length)];
     var rndAs = listData.as[Math.floor(Math.random() * listData.as.length)];
     var rndGrp = ["E", "F", "G"][Math.floor(Math.random() * 3)];
+
+    // The rndCP can be N/A, randomly.
     var rndCp = listData.status[Math.floor(Math.random() * listData.status.length)];
-    var rndAp = listData.status[Math.floor(Math.random() * listData.status.length)];
-    var rndP = listData.status[Math.floor(Math.random() * listData.status.length)];
+
+    // cr is only true if rndCp is not "N/A"
+    var cr;
+    rndCp != "N/A" ? cr = true : cr = false;
+    
+
+    // rndAp and rndP can not be N/A
+    // Remove N/A as an option
+    var shftStat = listData.status;
+    shftStat.shift();
+    // rndAp can only be Approved if rndCP is "N/A" or "Approved"
+    if (rndCp == "Pending") {
+        // rndAp MUST be "Pending"
+        var rndAp = "Pending";
+    } else {
+        // rndAp can be randomly Approved or Pending
+        var rndAp = shftStat[Math.floor(Math.random() * shftStat.length)];
+    };
+
+    // rndP can only be Pending if rndAp is Approved
+    if (rndAp == "Pending") {
+        // rndP MUST be "Pending"
+        var rndP = "Pending"
+    } else {
+        // rndAp can be randomly Approved or Pending
+        var rndP = shftStat[Math.floor(Math.random() * shftStat.length)];
+    }
+
+    // System status is only Printed or Approved if rndAp, rndP is "Approved", otherwise "Pending"
+    if (rndAp == "Approved" && rndP == "Approved") {
+        // Randomly "Printed" or "Approved"
+        var sys = listData.sys[getRandomInt(2)];
+    } else {
+        var sys = "Pending"
+    }
+
+
     /* Random date between today and 10 days ago */
     var today = new Date();
     var daysAgo = new Date();
@@ -214,7 +251,7 @@ export function createRequest (artist) {
         "time":rndTime, 
         "task":{ 
             "title":rndTask, 
-            "cr":Boolean(Math.round(Math.random())), // Randomly true or false
+            "cr":cr, // Randomly true or false
             "datetime":dates[0] 
         },
         "received":{ 
@@ -236,7 +273,8 @@ export function createRequest (artist) {
         ],
         "cp":rndCp, 
         "ap":rndAp,
-        "p":rndP
+        "p":rndP,
+        "system":sys
     };
 
     return genRequest
@@ -295,4 +333,10 @@ function GetSortOrder(prop) {
         }    
         return 0;    
     }
+}
+
+// Random number between 0 and another number number
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
 }

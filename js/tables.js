@@ -97,6 +97,10 @@ export function constructTables(which) {
                 // console.log(cell.getData());
                 var dom = domConstructor.makeDom(cell.getData(), "View Request");
                 showMessage(dom);
+                
+                
+
+
                 // console.log(cell.getData());
                 // reqArtistTable(cell.getData(), "Ian") // Default artist
             }},
@@ -134,7 +138,7 @@ export function constructTables(which) {
 
     var workloadTable = new Tabulator("#workloads-table", {
         layout:"fitData",
-        maxHeight:"500px",
+        // maxHeight:"500px",
         columnMinWidth:0,
         // responsiveLayout:"collapse",
         columns:[
@@ -212,7 +216,11 @@ export function constructTables(which) {
                         "text":"#000"
                     },
                     "N/A":{
-                        "back":"rgb(116, 116, 116)",
+                        "back":"#D3D3D3",
+                        "text":"black"
+                    },
+                    "Approved":{
+                        "back":"mediumseagreen",
                         "text":"#FFF"
                     }
                 }
@@ -230,7 +238,11 @@ export function constructTables(which) {
                         "text":"#000"
                     },
                     "N/A":{
-                        "back":"rgb(116, 116, 116)",
+                        "back":"#D3D3D3",
+                        "text":"black"
+                    },
+                    "Approved":{
+                        "back":"mediumseagreen",
                         "text":"#FFF"
                     }
                 }
@@ -248,8 +260,48 @@ export function constructTables(which) {
                         "text":"#000"
                     },
                     "N/A":{
-                        "back":"rgb(116, 116, 116)",
+                        "back":"#D3D3D3",
+                        "text":"black"
+                    },
+                    "Approved":{
+                        "back":"mediumseagreen",
                         "text":"#FFF"
+                    }
+                }
+
+                return `
+                    <div class="status" style="background-color:${colors[thisStatus]["back"]};color:${colors[thisStatus]["text"]}">${thisStatus}</div>
+                `
+            }},
+            {title:"System Status", vertAlign:"middle", field:"system", formatter:function(cell, formatterParams, onRendered) {
+                var thisStatus = cell.getValue();
+                var thisRow = cell.getRow();
+
+                if (thisStatus == "Printed") {
+                    var stats = ["cp", "ap", "p"];
+                    for (var i = 0; i < stats.length; i++) {
+                        $(thisRow.getCell(stats[i]).getElement()).find(".status").css({
+                            backgroundColor:"#D3D3D3",
+                            color:"black"
+                        });
+                    }
+                }
+
+
+                // If this is PRINTED, we need to change the background color of cp, ap, and p fields to grey, then set this one to light grey
+                
+                var colors = {
+                    "Pending":{
+                        "back":"rgb(255, 250, 46)",
+                        "text":"#000"
+                    },
+                    "Approved":{
+                        "back":"mediumseagreen",
+                        "text":"#FFF"
+                    },
+                    "Printed":{
+                        "back":"#D3D3D3",
+                        "text":"black"
                     }
                 }
 
@@ -447,7 +499,7 @@ export function reqArtistTable(artistsTable, artist, priority) {
     for (var i = 0; i < artistsRequests.length; i++) {
 
         $("select[name='Priority Override']").append(`
-            <option valaue="${i}" ${i == 0 ? `selected` : ``}>${i}</option>
+            <option valaue="${i}" ${i == 0 ? `selected` : ``}>${i + 1}</option>
         `)
     
     }
@@ -563,11 +615,9 @@ export function reqArtistTable(artistsTable, artist, priority) {
  * @returns Returns request data for this request
  */
 function priorityFormatter (index, cell) {
+
     var cellData = cell.getData();
     var req = cellData.requests[index - 1];
-
-    // (!! Actually! Remember to not do it here, and decrement from here on!)
-    // Remember to increment for each formatter
 
     try {
         var grp = req.group;
@@ -602,7 +652,25 @@ function showMessage(dom) {
     // Prevent background scrolling
     // https://stackoverflow.com/questions/19701289/disable-scrolling-while-popup-active/19701506
     $("body").addClass("my-body-noscroll-class");
+
+
     $(".content-container").append(dom);
+    
+    /** ############################################################################################ ↓
+     *  REQUEST DETAIL PAGE  ↓                                                                       ↓
+        ############################################################################################ ↓ */
+    /*
+        This is here because
+        ```
+        $(document.body).on('click', '#btn-assign-artist', function() {
+            console.log("Clicked!")
+        })
+        ```
+        in app.js under REQUEST DETAIL PAGE area won't fire!
+        Can't for the life of me figure out why!
+    */
+
+    
 
 
 }

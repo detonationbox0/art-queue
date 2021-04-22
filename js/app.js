@@ -71,19 +71,28 @@ $(function() {
                 // Show the Workloads table (then redraw and sort otherwise it's broken)
                 $("#workloads").removeClass("hidden");
                 $("#unassigned-requests").addClass("hidden");
+                $("#artist-availability").addClass("hidden");
 
                 //Update tab buttons
                 $(this).addClass("active-tab");
                 $("button[value='unassigned-requests']").removeClass("active-tab");
 
-                myTables.workloadTable.setSort("artist", "asc"); // Broken Table Fix
-                myTables.workloadTable.redraw(true);
+                //myTables.workloadTable.setSort("artist", "asc");
+                myTables.workloadTable.setSort([
+                    {column:"cp", dir:"asc"},
+                    {column:"ap", dir:"asc"},
+                    {column:"p", dir:"asc"},
+                    {column:"artist", dir:"asc"},
+                ]);
+
+                myTables.workloadTable.redraw(true); // Broken Table Fix
 
             } else {
 
                 // Show unassigned requests table
                 $("#workloads").addClass("hidden");
                 $("#unassigned-requests").removeClass("hidden");
+                $("#artist-availability").removeClass("hidden");
 
                 // Update tab buttons
                 $(this).addClass("active-tab");
@@ -122,14 +131,25 @@ $(function() {
                 myTables.workloadTable.clearFilter();
             } else {
                 console.log($(this).val().join(" "))
-                myTables.workloadTable.setFilter("artist", "in", $(this).val());;
+                myTables.workloadTable.setFilter("artist", "in", $(this).val());
+                myTables.workloadTable.setSort([
+                    {column:"cp", dir:"asc"},
+                    {column:"ap", dir:"asc"},
+                    {column:"p", dir:"asc"},
+                    {column:"artist", dir:"asc"},
+                ]);
             }
+
+            // The table needs to be sorted first by then rndCp, then rndAp, then rndP, then Artist?
+
         });
 
 
 
-        // If the user clicks on an artist in the Artist table, filter the workloads table!
-        console.log(myTables.artistTable);
+
+
+
+    
 
     /** ############################################################################################ ↓
      *  POPULATE CONTROLS  ↓                                                                         ↓
@@ -141,6 +161,7 @@ $(function() {
      *  REQUEST DETAIL PAGE  ↓                                                                       ↓
         ############################################################################################ ↓ */
 
+
         /**
          * When the user chooses another artist on the Request Detail page
          * Update the table with that artist's current requests
@@ -148,28 +169,61 @@ $(function() {
         $(document.body).on("change", "#req-artist-sel", function() {
             var artist = this.value;
             modTables.reqArtistTable(myData.artists, artist);
+        });
+
+        /** ############################################################################################### ↓
+         *  BROKEN AND I CAN"T FIGURE OUT WHY!!!!!!! THE ON CHANGE ABOVE WORKS, THE ON CLICK BELOW DOES NOT ↓
+        ################################################################################################### ↓ */
+        /*
+        $(document.body).on('click', '#btn-assign-artist', function() {
+            console.log("Clicked!")
         })
+        */
+       
+        $(document).on('click', ".btn-assign-artist", function() {
+            
+            // Get this request's id
+            var uid = $(".reqid").text();
+
+            // Get the unassigned requests table
+            var reqData = myTables.requestsTable.getData();
+
+            // Find the request in the data
+            reqData.forEach(function(req) {
+                if (req.uid == uid) {
+                    // Request found
+                    
+                    // Get the artist currenly selected in the Assign To drop down
+                    var thisArtist = $("#req-artist-sel option:selected").val();
+
+                    // Update the artist
+                    if (thisArtist == "Null") {
+                        req.artist = null;
+                    } else {
+                        req.artist = thisArtist;
+                    }
+                    
 
 
-        /**
-         * When the user chooses clicks Assign Artist on the Request Detail page,
-         * Override the priority, and reload tables
-         */
-        $(document.body).on("click", "#assign-artist", function() {
-            alert("I will assign this artist to this request. I will then reload each of the tables with this updated status");
+
+                }
+                
+            });
+
+            // Did this update reqData?
+            console.log(reqData);
+
+            // Yes, UPDATE ALL OF THE TABLES:
+            // Perhaps we make a refreshTablesFromRequestChange() function?
+            // Then also, refreshRablesFromTablesChange() function?
+            
+                
+
+
         });
 
 
-    /**
-     * When the user chooses another artist on the Request Detail page
-     * Update the table with that artist's current requests
-     */
-    $(document.body).on("change", "#req-artist-sel", function() {
-        var artist = this.value;
-        modTables.reqArtistTable(myData.artists, artist);
-    })
-    
-
+        
 
 });
 
@@ -179,15 +233,24 @@ $(function() {
  * The Background of a shown message is clicked
  * Hide the message.
  */
-$("#alert").on("click", function() {
+ $(document.body).on("click", "#close-alert", function() {
     $(".content-container").empty();
     // Resume background scrolling
     // https://stackoverflow.com/questions/19701289/disable-scrolling-while-popup-active/19701506
     $("body").removeClass("my-body-noscroll-class");
-    $(this).css("display", "none");
+    $("#alert").css("display", "none");
 });
+// $("#alert").on("click", function() {
+//     $(".content-container").empty();
+//     // Resume background scrolling
+//     // https://stackoverflow.com/questions/19701289/disable-scrolling-while-popup-active/19701506
+//     $("body").removeClass("my-body-noscroll-class");
+//     $(this).css("display", "none");
+// });
 
-$(".content-container").on("click", function(e) {
-    e.stopPropagation();
-});
+
+
+// $(".content-container").on("click", function(e) {
+//     e.stopPropagation();
+// });
 

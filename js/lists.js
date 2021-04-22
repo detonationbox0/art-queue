@@ -232,8 +232,14 @@ export function getLists() {
 
 
         var status = [
-            "Pending",
             "N/A",
+            "Pending",
+            "Approved"
+        ];
+
+        var sys = [
+            "Approved",
+            "Printed"
         ];
 
     return {
@@ -246,6 +252,7 @@ export function getLists() {
         "as":accs, // List of account specialists
         "attr":attr, // List of attributes
         "tasks":tasks, // List of attributes
-        "status":status // List of statuses for Creative Proof, AS Proof, and Print
+        "status":status, // List of statuses for Creative Proof, AS Proof, and Print
+        "sys":sys // List of statuses for the request within the .NET system. "Approved" or "Printed"
     }
 };

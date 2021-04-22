@@ -11,7 +11,7 @@ export function makeDom(tableData, domType) {
     switch(domType) {
         case "View Request": // ----------------------------------------------
 
-            console.log(tableData.artist)
+            // console.log(tableData.artist)
 
             //Convert tableData.time (decimal) to hrs & seconds
             var n = new Date(0,0);
@@ -19,7 +19,10 @@ export function makeDom(tableData, domType) {
             var nSplit = n.toTimeString().slice(0, 8).split(":");
             var timeString = Number(nSplit[0]) + " Hours " + Number(nSplit[1]) + " Minutes"
 
+            
+
             var dom = `
+            <span class='reqid'>${tableData.uid}</span>
             <div class="req-area" id="req-info">
                 <div class="req-title">
                     <h3>Customer & Project Information</h3>
@@ -173,18 +176,18 @@ export function makeDom(tableData, domType) {
                             </select>
                         </div>
 
-                        <button id="assign-artist">Assign Artist</button>
+                        <button class="btn-assign-artist">Assign Artist</button>
                     </div>
                     <div id="req-assignments-bottom">
                         <div id="req-artist-table">
                         </div>
                     </div>
                 </div>
+                <button id="close-alert">Close</button>
             </div>
             `
 
     }
-
-
-    return dom;
+    // console.log(dom);
+    return dom
 }
