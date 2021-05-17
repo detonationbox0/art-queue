@@ -146,14 +146,14 @@ export function constructTables(which) {
             {title:"P #", vertAlign:"middle", width:19, field:"priority"},
             {title:"Artist", vertAlign:"middle", field:"artist"},
             {title:"Industry", vertAlign:"middle", field:"industry"},
-            {title:"Tier", vertAlign:"middle", field:"tier"},
+            {title:"Tier", vertAlign:"middle", field:"tier",  headerFilter:"input"},
             {title:"G", vertAlign:"middle", width:19, field:"group"},
             {title:"Code", vertAlign:"middle", field:"store.code"},
             {title:"Name", vertAlign:"middle", field:"store.name"},
             {title:"Project Kind", vertAlign:"middle", field:"kind"},
             {title:"Content Attributes", vertAlign:"middle", width:77, field:"content"},
             {title:"Design Attributes", vertAlign:"middle", width:77, field:"design"},
-            {title:"Product", vertAlign:"middle", field:"store.product"},
+            {title:"Product", vertAlign:"middle", field:"store.product", headerFilter:"input"},
             {title:"Scheduled Task", vertAlign:"middle", field:"task", vertAlign:"middle", formatter:function(cell, formatterParams, onRendered) {
                 // If it's a system task, use system icon
                 cell.getElement().style.padding = "0px";
@@ -338,7 +338,7 @@ export function constructTables(which) {
                 }
                 return indString.join(", ")
             }},
-            {title:"Tier", field:"tier", vertAlign:"middle"},
+            {title:"Tier", field:"tier", vertAlign:"middle", headerFilter:"input"},
             {title:"Active Queue", field:"queue.numRequests", vertAlign:"middle", formatter(cell, formatterParams, onRendered) {
                 var getReq = cell.getData().requests;
                 var timeload = cell.getData().queue.timeload;
